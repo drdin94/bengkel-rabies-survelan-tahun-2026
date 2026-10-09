@@ -971,20 +971,28 @@
             }
         }
 
-        function submitTest(e, testId) {
+        async function submitTest(e, testId) {
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
+            const submitBtn = form.querySelector('button[type="submit"]');
             
             const dataQuestions = storedQuizData[testId];
             if (!dataQuestions) return alert("Ralat pada data soalan.");
 
-            let correctAnswers = 0;
-            let totalQuestions = dataQuestions.length;
             let nama = formData.get('test_nama');
             let ic = formData.get('test_ic');
 
-            // Pengiraan Markah Berdasarkan JSON Data
+            // 1. SEKATAN: Pre-Test Hanya Boleh Diambil Sekali
+            if ((testId === 'pre1' || testId === 'pre2') && localStorage.getItem('pre_submitted_' + testId + '_' + ic)) {
+                showModal('Akses Ditolak', 'Anda telah pun menjawab Pre-Test ini menggunakan No. Kad Pengenalan: <strong>' + ic + '</strong>. Ujian ini hanya boleh diambil sekali sahaja.');
+                return; // Berhenti di sini
+            }
+
+            // PENGIRAAN MARKAH
+            let correctAnswers = 0;
+            let totalQuestions = dataQuestions.length;
+
             dataQuestions.forEach(q => {
                 let userAnswer = formData.get('q_' + q.no);
                 if (userAnswer === q.jawapan) {
@@ -994,80 +1002,126 @@
             
             let percentage = Math.round((correctAnswers / totalQuestions) * 100);
 
-            if (testId === 'pre1' || testId === 'pre2') {
-                // Simpan skor Pre-Test (Sembunyi dari user)
-                localStorage.setItem(testId + '_' + ic + '_score', percentage);
-                showModal('Berjaya Dihantar', 'Jawapan Pre-Test bagi <strong>' + nama + '</strong> telah direkodkan. Sila ikuti sesi bengkel dengan teliti.');
-                
-                // Reset UI
-                const sectionNum = testId.replace('pre', '');
-                document.getElementById('preTestForm' + sectionNum).classList.add('hidden-section');
-                document.getElementById('pretest-intro' + sectionNum).classList.remove('hidden-section');
-                
-            } else if (testId === 'post1' || testId === 'post2') {
-                // Panggil Skor Pre-Test untuk Perbandingan
-                let preTestId = testId.replace('post', 'pre');
-                let preScore = localStorage.getItem(preTestId + '_' + ic + '_score');
-                
-                let resultMsg = `<div class="mb-4 text-left p-3 bg-gray-50 rounded-lg text-sm"><span class="block text-gray-500 text-xs uppercase mb-1">Peserta</span><strong class="text-blue-800 text-base">${nama}</strong><br><span class="text-gray-600">${ic}</span></div><hr class="my-4"><span class="text-gray-600 block text-sm mb-1">Markah Post-Test Anda:</span><span class="text-4xl font-bold text-gray-900 block mb-4">${percentage}%</span>`;
-                
-                if (preScore !== null) {
-                    let preScoreInt = parseInt(preScore);
-                    let diff = percentage - preScoreInt;
-                    
-                    resultMsg += `<div class="p-4 rounded-lg text-left text-sm `;
-                    if (diff > 0) {
-                        resultMsg += `bg-green-50 border border-green-200"><span class="text-green-700 font-bold block mb-1">Peningkatan Prestasi! 📈</span><span class="text-green-600">Markah anda meningkat sebanyak <strong>${diff}%</strong> berbanding Pre-Test (${preScoreInt}%).</span>`;
-                    } else if (diff === 0) {
-                        resultMsg += `bg-blue-50 border border-blue-200"><span class="text-blue-700 font-bold block mb-1">Konsisten ⚖️</span><span class="text-blue-600">Markah anda adalah sama dengan Pre-Test (${preScoreInt}%).</span>`;
-                    } else {
-                        resultMsg += `bg-red-50 border border-red-200"><span class="text-red-700 font-bold block mb-1">Perlu Perhatian 📉</span><span class="text-red-600">Markah anda menurun sebanyak <strong>${Math.abs(diff)}%</strong> berbanding Pre-Test (${preScoreInt}%).</span>`;
-                    }
-                    resultMsg += `</div>`;
-                } else {
-                    resultMsg += `<div class="p-3 bg-yellow-50 text-yellow-800 text-xs text-left rounded border border-yellow-200">Rekod Pre-Test untuk IC <strong>${ic}</strong> tidak dijumpai dalam peranti ini untuk dibuat perbandingan.</div>`;
+            // 2. SEKATAN: Post-Test Wajib 80% Ke Atas Untuk Lulus
+            if (testId === 'post1' || testId === 'post2') {
+                if (percentage < 80) {
+                    showModal('Belum Mencapai Tahap Lulus', `Markah anda: <strong class="text-red-600 text-xl">${percentage}%</strong>.<br><br>Syarat kelayakan e-Sijil memerlukan anda mendapat markah <strong>80% dan ke atas</strong>. Sila semak dan betulkan semula jawapan anda, kemudian tekan hantar.`);
+                    return; // Berhenti di sini, borang TIDAK di-reset supaya peserta boleh ubah jawapan.
                 }
-
-                showModal('Keputusan Ujian', resultMsg);
-                
-                // Reset UI
-                const sectionNum = testId.replace('post', '');
-                document.getElementById('postTestForm' + sectionNum).classList.add('hidden-section');
-                document.getElementById('posttest-intro' + sectionNum).classList.remove('hidden-section');
             }
+
+            // PROSES PENGHANTARAN KE GOOGLE SHEETS
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Merekod Jawapan...`;
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            const urlMarkah = "https://script.google.com/macros/s/AKfycbznQzYCRzPVOpR1O075W0bIJ6RV_faznNWC3ex2xh1gKzl2GAjgrFdn3TaF0o9eMlY1/exec";
+            const sheetData = new URLSearchParams();
             
-            form.reset();
+            const hariUjian = (testId.includes('1')) ? 'Hari 1 (Rabies)' : 'Hari 2 (Survelan)';
+            const jenisUjian = (testId.includes('pre')) ? 'Pre-Test' : 'Post-Test';
+
+            sheetData.append('hari', hariUjian);
+            sheetData.append('jenis_ujian', jenisUjian);
+            sheetData.append('nama', nama);
+            sheetData.append('ic', ic);
+            sheetData.append('markah', correctAnswers + '/' + totalQuestions);
+            sheetData.append('peratusan', percentage + '%');
+
+            try {
+                // Hantar data markah
+                await fetch(urlMarkah, { method: 'POST', body: sheetData, mode: 'no-cors' });
+
+                // UI SELEPAS BERJAYA DIHANTAR
+                if (testId === 'pre1' || testId === 'pre2') {
+                    // Simpan status dan markah Pre-Test dalam memori
+                    localStorage.setItem('pre_submitted_' + testId + '_' + ic, 'true');
+                    localStorage.setItem(testId + '_' + ic + '_score', percentage);
+                    
+                    showModal('Berjaya Dihantar', 'Jawapan Pre-Test bagi <strong>' + nama + '</strong> telah direkodkan ke dalam pangkalan data. Sila ikuti sesi bengkel dengan teliti.');
+                    
+                } else if (testId === 'post1' || testId === 'post2') {
+                    // Simpan status Lulus Post-Test dalam memori (Untuk Sijil)
+                    localStorage.setItem('post_passed_' + testId + '_' + ic, 'true');
+                    
+                    // Panggil Skor Pre-Test untuk Perbandingan
+                    let preTestId = testId.replace('post', 'pre');
+                    let preScore = localStorage.getItem(preTestId + '_' + ic + '_score');
+                    
+                    let resultMsg = `<div class="mb-4 text-left p-3 bg-gray-50 rounded-lg text-sm"><span class="block text-gray-500 text-xs uppercase mb-1">Peserta</span><strong class="text-blue-800 text-base">${nama}</strong><br><span class="text-gray-600">${ic}</span></div><hr class="my-4"><span class="text-gray-600 block text-sm mb-1">Markah Post-Test Anda:</span><span class="text-4xl font-bold text-gray-900 block mb-4">${percentage}%</span>`;
+                    
+                    if (preScore !== null) {
+                        let preScoreInt = parseInt(preScore);
+                        let diff = percentage - preScoreInt;
+                        
+                        resultMsg += `<div class="p-4 rounded-lg text-left text-sm `;
+                        if (diff > 0) {
+                            resultMsg += `bg-green-50 border border-green-200"><span class="text-green-700 font-bold block mb-1">Tahniah! Peningkatan Prestasi 📈</span><span class="text-green-600">Markah anda meningkat sebanyak <strong>${diff}%</strong> berbanding Pre-Test (${preScoreInt}%).</span>`;
+                        } else if (diff === 0) {
+                            resultMsg += `bg-blue-50 border border-blue-200"><span class="text-blue-700 font-bold block mb-1">Konsisten ⚖️</span><span class="text-blue-600">Markah anda melepasi tahap lulus dan sama dengan Pre-Test (${preScoreInt}%).</span>`;
+                        } else {
+                            resultMsg += `bg-yellow-50 border border-yellow-200"><span class="text-yellow-700 font-bold block mb-1">Lulus Walaupun Menurun 📉</span><span class="text-yellow-600">Markah anda menurun sebanyak <strong>${Math.abs(diff)}%</strong> berbanding Pre-Test (${preScoreInt}%), tetapi masih melepasi tahap kelayakan sijil.</span>`;
+                        }
+                        resultMsg += `</div>`;
+                    }
+                    showModal('Ujian Lulus & Direkodkan', resultMsg);
+                }
+                
+                // Reset UI Borang
+                form.reset();
+                const sectionNum = testId.replace(/pre|post/g, '');
+                const formToHide = testId.includes('pre') ? 'preTestForm' + sectionNum : 'postTestForm' + sectionNum;
+                const introToShow = testId.includes('pre') ? 'pretest-intro' + sectionNum : 'posttest-intro' + sectionNum;
+                
+                document.getElementById(formToHide).classList.add('hidden-section');
+                document.getElementById(introToShow).classList.remove('hidden-section');
+
+            } catch (err) {
+                alert('Terdapat ralat semasa menghantar markah. Sila pastikan talian internet anda stabil.');
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
         }
 
-        // --- SEMAKAN SIJIL ---
+        // --- SEMAKAN SIJIL (DIKEMAS KINI DENGAN SYARAT UJIAN) ---
         function semakSijil() {
             const semakIC = document.getElementById('semak-ic').value;
             const resDiv = document.getElementById('keputusan-sijil');
             resDiv.classList.remove('hidden-section');
 
             if(semakIC.length < 12) {
-                resDiv.className = "mt-6 p-4 rounded-lg border bg-red-50 border-red-200 text-red-700 text-sm";
+                resDiv.className = "mt-6 p-4 rounded-lg border bg-red-50 border-red-200 text-red-700 text-sm text-left";
                 resDiv.innerHTML = "Sila masukkan No. Kad Pengenalan 12 digit yang sah.";
                 return;
             }
 
-            const icHari1 = localStorage.getItem('kehadiran_hari1_ic');
-            const icHari2 = localStorage.getItem('kehadiran_hari2_ic');
+            // Ambil semua data dari memori untuk disemak
+            const hadirHari1 = (semakIC === localStorage.getItem('kehadiran_hari1_ic'));
+            const hadirHari2 = (semakIC === localStorage.getItem('kehadiran_hari2_ic'));
+            const lulusPost1 = (localStorage.getItem('post_passed_post1_' + semakIC) === 'true');
+            const lulusPost2 = (localStorage.getItem('post_passed_post2_' + semakIC) === 'true');
 
-            if (semakIC === icHari1 && semakIC === icHari2) {
+            // SYARAT LULUS KETAT: Mesti hadir 2 hari DAN lulus 2 Post-Test
+            if (hadirHari1 && hadirHari2 && lulusPost1 && lulusPost2) {
                 resDiv.className = "mt-6 p-4 rounded-lg border bg-green-50 border-green-200 text-green-800 text-sm";
                 resDiv.innerHTML = `
                     <svg class="w-10 h-10 text-green-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <h4 class="font-bold text-base mb-1">Tahniah! Anda Layak</h4>
-                    <p class="text-xs mb-4">Kehadiran 2 hari bengkel telah disahkan.</p>
+                    <p class="text-xs mb-4">Anda telah memenuhi kehadiran penuh dan melepasi tahap lulus (80% ke atas) bagi kesemua ujian penilaian.</p>
                     <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow transition text-xs font-semibold w-full">Muat Turun E-Sijil</button>
                 `;
-            } else if (semakIC === icHari1 || semakIC === icHari2) {
-                resDiv.className = "mt-6 p-4 rounded-lg border bg-yellow-50 border-yellow-200 text-yellow-800 text-sm text-left";
-                resDiv.innerHTML = "Rekod tidak lengkap. Anda hanya direkodkan hadir untuk SATU hari sahaja. E-Sijil memerlukan kehadiran penuh 2 hari.";
             } else {
-                resDiv.className = "mt-6 p-4 rounded-lg border bg-red-50 border-red-200 text-red-800 text-sm";
-                resDiv.innerHTML = "No. Kad Pengenalan tidak dijumpai dalam rekod pendaftaran peranti ini.";
+                let errorMsg = "<ul class='text-left list-disc pl-5 mt-3 space-y-1 text-xs'>";
+                if (!hadirHari1 || !hadirHari2) errorMsg += "<li>Kehadiran penuh pada kedua-dua hari tidak direkodkan.</li>";
+                if (!lulusPost1) errorMsg += "<li>Gagal / Belum melengkapkan ujian <strong>Post-Test Rabies</strong> (80% minimum).</li>";
+                if (!lulusPost2) errorMsg += "<li>Gagal / Belum melengkapkan ujian <strong>Post-Test Survelan</strong> (80% minimum).</li>";
+                errorMsg += "</ul>";
+
+                resDiv.className = "mt-6 p-4 rounded-lg border bg-red-50 border-red-200 text-red-800 text-sm text-left";
+                resDiv.innerHTML = `<strong>Kelayakan E-Sijil Ditolak:</strong> Anda tidak memenuhi syarat berikut:${errorMsg}`;
             }
         }
 
