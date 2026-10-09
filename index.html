@@ -2,14 +2,23 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Bengkel Latihan Rabies & Survelan 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Latar belakang cerah yang lebih neutral */
+            background-color: #f8fafc;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Custom scrollbar hiding for mobile tabs */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
         .tab-active {
             border-bottom: 3px solid #15803d;
@@ -23,26 +32,11 @@
             color: #374151;
             border-bottom: 3px solid #d1d5db;
         }
-        /* Custom scrollbar for better appearance */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
         .hidden-section {
             display: none !important;
         }
-        /* Simple modal animation */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(-5px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .fade-in {
@@ -50,14 +44,14 @@
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+<body class="text-gray-800 min-h-screen flex flex-col">
 
-    <div id="landing-page" class="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-gray-800 p-4 sm:p-6 z-50 absolute inset-0 overflow-y-auto">
-        <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-xl max-w-4xl w-full flex flex-col items-center">
+    <div id="landing-page" class="flex-grow flex flex-col items-center justify-center bg-gray-100 p-4 sm:p-6 w-full fade-in">
+        <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-xl max-w-4xl w-full flex flex-col items-center my-4">
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Tentatif Program Bengkel</h1>
             
-            <iframe src="https://drive.google.com/file/d/1CXYtGASDXFGHyTYQSeCwG3Gnfy_sz9nZ/preview" class="w-full h-[450px] sm:h-[600px] rounded-lg shadow-sm mb-2 border border-gray-200" style="border:none;" allow="autoplay"></iframe>
-            <p class="text-sm text-gray-500 mb-8 italic text-center">Sila semak jadual tentatif di atas sebelum masuk ke aplikasi. Anda boleh scroll di dalam kotak gambar jika menggunakan telefon pintar.</p>
+            <iframe src="https://drive.google.com/file/d/1CXYtGASDXFGHyTYQSeCwG3Gnfy_sz9nZ/preview" class="w-full h-[500px] sm:h-[600px] rounded-lg shadow-sm mb-2 border border-gray-200" style="border:none;" allow="autoplay"></iframe>
+            <p class="text-sm text-gray-500 mb-8 italic text-center">Sila semak jadual tentatif di atas sebelum masuk ke aplikasi. Anda boleh tatal (scroll) di dalam kotak gambar jika menggunakan telefon pintar.</p>
             
             <button onclick="enterApp()" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 rounded-full shadow-lg transition transform hover:scale-105 text-lg flex items-center justify-center gap-2">
                 Masuk ke Aplikasi <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -65,185 +59,176 @@
         </div>
     </div>
 
-    <div id="initial-tabs-view" class="hidden-section min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6 z-40 absolute inset-0 fade-in overflow-y-auto">
-        <button onclick="backToHome()" class="absolute top-6 left-6 text-gray-500 hover:text-green-700 flex items-center gap-2 font-medium transition bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Laman Utama
-        </button>
-        
-        <img src="https://drive.google.com/thumbnail?id=1hRlALBGaoC0Fh5dNrCorFqVOi5U8kz_c&sz=w1000" class="w-full max-w-3xl rounded-xl shadow-sm mb-8 mt-16 sm:mt-0 bg-white" alt="Header Bengkel">
-
-        <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">Sila Pilih Menu Utama</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-3xl">
-            <button onclick="enterMainApp('kehadiran')" class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-green-500 flex flex-col items-center gap-4 transform hover:-translate-y-1">
-                <div class="bg-green-100 p-4 rounded-full text-green-700">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <div class="text-center">
-                    <span class="block font-bold text-xl text-gray-800">Kehadiran</span>
-                    <span class="block text-sm text-gray-500 mt-1">Makluman Kehadiran Peserta</span>
-                </div>
+    <div id="initial-tabs-view" class="hidden-section flex-grow flex flex-col bg-gray-50 fade-in w-full">
+        <!-- Header Nav & Gambar dibetulkan agar tidak bertindih -->
+        <div class="max-w-3xl mx-auto w-full p-4 sm:p-6 pb-2">
+            <button onclick="backToHome()" class="mb-4 text-gray-500 hover:text-green-700 flex items-center gap-2 font-medium transition bg-white px-4 py-2 rounded-full shadow-sm border border-gray-200 inline-flex">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Kembali ke Tentatif
             </button>
-            <button onclick="enterMainApp('ujian')" class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-blue-500 flex flex-col items-center gap-4 transform hover:-translate-y-1">
-                <div class="bg-blue-100 p-4 rounded-full text-blue-700">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                </div>
-                <div class="text-center">
-                    <span class="block font-bold text-xl text-gray-800">Ujian & Penilaian</span>
-                    <span class="block text-sm text-gray-500 mt-1">Pre-Test dan Post-Test</span>
-                </div>
-            </button>
-            <button onclick="enterMainApp('slaid')" class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-orange-500 flex flex-col items-center gap-4 transform hover:-translate-y-1">
-                <div class="bg-orange-100 p-4 rounded-full text-orange-700">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
-                </div>
-                <div class="text-center">
-                    <span class="block font-bold text-xl text-gray-800">Slaid Bengkel</span>
-                    <span class="block text-sm text-gray-500 mt-1">Muat Turun Bahan</span>
-                </div>
-            </button>
-            <button onclick="enterMainApp('gambar')" class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-purple-500 flex flex-col items-center gap-4 transform hover:-translate-y-1">
-                <div class="bg-purple-100 p-4 rounded-full text-purple-700">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                </div>
-                <div class="text-center">
-                    <span class="block font-bold text-xl text-gray-800">Gambar Program</span>
-                    <span class="block text-sm text-gray-500 mt-1">Galeri Kenangan</span>
-                </div>
-            </button>
+            <img src="https://drive.google.com/thumbnail?id=1hRlALBGaoC0Fh5dNrCorFqVOi5U8kz_c&sz=w1200" alt="Header Bengkel" class="w-full h-[150px] sm:h-[250px] object-cover object-center rounded-xl shadow-sm mb-6 border border-gray-200">
+            
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Sila Pilih Menu Utama</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 w-full pb-8">
+                <button onclick="enterMainApp('kehadiran')" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-green-500 flex flex-col items-center gap-4">
+                    <div class="bg-green-100 p-4 rounded-full text-green-700">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="text-center">
+                        <span class="block font-bold text-xl text-gray-800">Kehadiran</span>
+                        <span class="block text-sm text-gray-500 mt-1">Makluman Kehadiran Peserta</span>
+                    </div>
+                </button>
+                <button onclick="enterMainApp('ujian')" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-blue-500 flex flex-col items-center gap-4">
+                    <div class="bg-blue-100 p-4 rounded-full text-blue-700">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <div class="text-center">
+                        <span class="block font-bold text-xl text-gray-800">Ujian & Penilaian</span>
+                        <span class="block text-sm text-gray-500 mt-1">Pre-Test dan Post-Test</span>
+                    </div>
+                </button>
+                <button onclick="enterMainApp('slaid')" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-orange-500 flex flex-col items-center gap-4">
+                    <div class="bg-orange-100 p-4 rounded-full text-orange-700">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div class="text-center">
+                        <span class="block font-bold text-xl text-gray-800">Slaid Bengkel</span>
+                        <span class="block text-sm text-gray-500 mt-1">Muat Turun Bahan</span>
+                    </div>
+                </button>
+                <button onclick="enterMainApp('gambar')" class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg transition-all border-2 border-transparent hover:border-purple-500 flex flex-col items-center gap-4">
+                    <div class="bg-purple-100 p-4 rounded-full text-purple-700">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div class="text-center">
+                        <span class="block font-bold text-xl text-gray-800">Gambar Program</span>
+                        <span class="block text-sm text-gray-500 mt-1">Galeri Kenangan</span>
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 
     <div id="main-app" class="hidden-section flex-grow flex flex-col w-full">
-
-        <header class="bg-white shadow-sm py-4 px-4 border-b border-gray-200">
-            <div class="max-w-5xl mx-auto flex flex-col items-center text-center">
-                <img src="https://drive.google.com/thumbnail?id=1hRlALBGaoC0Fh5dNrCorFqVOi5U8kz_c&sz=w1000" class="w-full max-w-3xl rounded-lg" alt="Header Bengkel">
+        <!-- Header Image & Nav -->
+        <header class="bg-white py-4 px-4 border-b border-gray-200">
+            <div class="max-w-5xl mx-auto flex flex-col items-center">
+                <img src="https://drive.google.com/thumbnail?id=1hRlALBGaoC0Fh5dNrCorFqVOi5U8kz_c&sz=w1200" alt="Header Bengkel" class="w-full max-w-3xl h-[120px] sm:h-[250px] object-cover object-center rounded-lg shadow-sm border border-gray-100">
             </div>
         </header>
         
         <div class="bg-gray-50 py-3 border-b border-gray-200">
             <div class="max-w-5xl mx-auto px-4 flex justify-between">
-                <button onclick="backToMainMenu()" class="text-sm font-semibold text-gray-600 hover:text-green-700 flex items-center gap-1 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Menu Pilihan
+                <button onclick="backToMainMenu()" class="text-sm font-semibold text-gray-600 hover:text-green-700 flex items-center gap-1 transition bg-white px-3 py-1.5 rounded-full border shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Menu Pilihan
                 </button>
-                <button onclick="backToHome()" class="text-sm font-semibold text-gray-600 hover:text-green-700 flex items-center gap-1 transition">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Laman Utama
+                <button onclick="backToHome()" class="text-sm font-semibold text-gray-600 hover:text-green-700 flex items-center gap-1 transition bg-white px-3 py-1.5 rounded-full border shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Utama
                 </button>
             </div>
         </div>
 
-        <div class="bg-white shadow-sm sticky top-0 z-10 border-b border-gray-200">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <nav class="flex overflow-x-auto whitespace-nowrap hide-scrollbar" aria-label="Tabs">
-                    <button onclick="switchTab('kehadiran')" id="tab-kehadiran" class="tab-active w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-200">
-                        Kehadiran
-                    </button>
-                    <button onclick="switchTab('ujian')" id="tab-ujian" class="tab-inactive w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-200">
-                        Ujian & Penilaian
-                    </button>
-                    <button onclick="switchTab('slaid')" id="tab-slaid" class="tab-inactive w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-200">
-                        Slaid
-                    </button>
-                    <button onclick="switchTab('gambar')" id="tab-gambar" class="tab-inactive w-1/4 py-4 px-1 text-center border-b-2 font-medium text-sm transition-colors duration-200">
-                        Gambar
-                    </button>
-                </nav>
-            </div>
+        <!-- Sticky Tabs dengan fungsi Scroll Mobile (Tidak overlap tulisan) -->
+        <div class="bg-white shadow-sm sticky top-0 z-10 border-b border-gray-200 w-full overflow-hidden">
+            <nav class="flex overflow-x-auto hide-scrollbar scroll-smooth whitespace-nowrap w-full" aria-label="Tabs">
+                <button onclick="switchTab('kehadiran')" id="tab-kehadiran" class="tab-active flex-1 min-w-[140px] py-4 px-2 text-center border-b-2 font-medium text-sm transition-colors duration-200">
+                    Kehadiran
+                </button>
+                <button onclick="switchTab('ujian')" id="tab-ujian" class="tab-inactive flex-1 min-w-[150px] py-4 px-2 text-center border-b-2 font-medium text-sm transition-colors duration-200">
+                    Ujian & Penilaian
+                </button>
+                <button onclick="switchTab('slaid')" id="tab-slaid" class="tab-inactive flex-1 min-w-[120px] py-4 px-2 text-center border-b-2 font-medium text-sm transition-colors duration-200">
+                    Slaid
+                </button>
+                <button onclick="switchTab('gambar')" id="tab-gambar" class="tab-inactive flex-1 min-w-[120px] py-4 px-2 text-center border-b-2 font-medium text-sm transition-colors duration-200">
+                    Gambar
+                </button>
+            </nav>
         </div>
 
         <div class="max-w-5xl mx-auto w-full px-4 mt-4 flex justify-end">
-            <label class="flex items-center space-x-2 text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full cursor-pointer hover:bg-gray-200 transition">
-                <input type="checkbox" id="devMode" onchange="checkTimeLogic()" class="rounded text-green-600 focus:ring-green-500">
-                <span>Dev Mode: Abaikan Masa 4 PM</span>
-            </label>
+            <button type="button" onclick="activateDevMode()" class="flex items-center space-x-1 text-[11px] text-gray-400 hover:text-gray-600 bg-gray-50 hover:bg-gray-100 px-3 py-1 rounded-full cursor-pointer transition border border-gray-200">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                <span>Dev Mode</span>
+            </button>
         </div>
 
-        <main class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6">
+        <main class="flex-grow max-w-5xl mx-auto w-full px-4 sm:px-6 py-6">
             
             <div id="content-kehadiran" class="hidden-section fade-in">
                 
-                <div id="submenu-kehadiran" class="flex flex-col gap-4 max-w-md mx-auto py-8">
+                <div id="submenu-kehadiran" class="flex flex-col gap-4 max-w-md mx-auto py-2">
                     <h3 class="text-center font-semibold text-gray-500 mb-2">Pilih Borang Kehadiran</h3>
-                    <button onclick="showSection('kehadiran', 'hari1')" class="bg-white border border-gray-200 hover:border-green-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-green-100 p-2 rounded-lg text-green-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
-                            <span>Kehadiran Hari Pertama (28 Okt)</span>
+                    <button onclick="showSection('kehadiran', 'hari1')" class="bg-white border border-gray-200 hover:border-green-500 hover:shadow-md text-gray-800 font-semibold py-4 px-5 rounded-xl transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4 text-left">
+                            <div class="bg-green-100 p-2 rounded-lg text-green-600 flex-shrink-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+                            <div>
+                                <span class="block">Hari Pertama (28 Okt)</span>
+                                <span class="block text-xs text-gray-500 font-normal mt-0.5">Dibuka 4:00 PM - 6:00 PM</span>
+                            </div>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 group-hover:text-green-600 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-green-600 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
-                    <button onclick="showSection('kehadiran', 'hari2')" class="bg-white border border-gray-200 hover:border-green-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                        <div class="flex items-center gap-4">
-                            <div class="bg-green-100 p-2 rounded-lg text-green-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
-                            <span>Kehadiran Hari Kedua (29 Okt)</span>
+                    <button onclick="showSection('kehadiran', 'hari2')" class="bg-white border border-gray-200 hover:border-green-500 hover:shadow-md text-gray-800 font-semibold py-4 px-5 rounded-xl transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4 text-left">
+                            <div class="bg-green-100 p-2 rounded-lg text-green-600 flex-shrink-0"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
+                            <div>
+                                <span class="block">Hari Kedua (29 Okt)</span>
+                                <span class="block text-xs text-gray-500 font-normal mt-0.5">Dibuka 4:00 PM - 6:00 PM</span>
+                            </div>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 group-hover:text-green-600 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-green-600 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
 
-                    <div class="mt-8 border-t border-gray-200 pt-6">
-                        <h3 class="text-center font-bold text-gray-800 mb-4">Penjanaan E-Sijil</h3>
+                    <div class="mt-6 border-t border-gray-200 pt-6">
+                        <h3 class="text-center font-bold text-gray-800 mb-3">Penjanaan E-Sijil</h3>
                         <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-xl text-center shadow-sm">
-                            <p class="text-sm text-gray-600 mb-4">Sijil hanya akan dijanakan jika anda melengkapkan kehadiran pada <strong>kedua-dua hari</strong> bengkel dengan menggunakan No. Kad Pengenalan yang sama.</p>
-                            <button onclick="showSection('kehadiran', 'sijil')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
-                                Semak Kelayakan Sijil
+                            <p class="text-xs text-gray-600 mb-4">Sijil hanya akan dijanakan jika anda melengkapkan kehadiran pada <strong>kedua-dua hari</strong> bengkel dengan menggunakan No. Kad Pengenalan yang sama.</p>
+                            <button onclick="showSection('kehadiran', 'sijil')" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                                Semak Kelayakan
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <div id="section-kehadiran-hari1" class="hidden-section fade-in">
-                    <button onclick="showSubmenu('kehadiran')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali ke Pilihan Kehadiran
+                    <button onclick="showSubmenu('kehadiran')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <section class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
-                            <h2 class="text-lg font-bold text-gray-800">Makluman Kehadiran (Hari 1: 28 Oktober)</h2>
+                    <section class="bg-white rounded-xl shadow-md p-4 sm:p-6 border border-gray-100">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-2">
+                            <h2 class="text-lg font-bold text-gray-800">Kehadiran (Hari 1: 28 Okt)</h2>
                             <span id="status-hari1" class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700">Ditutup</span>
                         </div>
 
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-blue-700 font-medium">
-                                        PENTING: Sila pastikan Nama dan No. Kad Pengenalan adalah TEPAT dan SAMA pada pendaftaran Hari Pertama dan Hari Kedua untuk kelayakan e-Sijil.
-                                    </p>
-                                </div>
+                        <div id="locked-msg-hari1" class="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900" id="locked-title-hari1">Borang Kehadiran Ditutup</h3>
+                            <p class="mt-1 text-xs sm:text-sm text-gray-500" id="locked-desc-hari1">Borang akan dibuka dari <strong class="text-gray-700">4:00 PM hingga 6:00 PM</strong>.</p>
+                        </div>
+
+                        <form id="form-hari1" class="hidden-section space-y-4 mt-4" onsubmit="submitAttendance(event, 1)">
+                            <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 text-xs text-blue-700 font-medium mb-4">
+                                PENTING: Maklumat mesti tepat dan SAMA pada hari pertama & kedua untuk sistem menjana e-Sijil.
                             </div>
-                        </div>
-
-                        <!-- Locked Message -->
-                        <div id="locked-msg-hari1" class="text-center py-10 bg-gray-50 rounded-lg border border-gray-200">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">Borang Kehadiran Belum Dibuka</h3>
-                            <p class="mt-1 text-sm text-gray-500">Borang kehadiran untuk hari pertama akan dibuka pada jam <strong class="text-gray-700">4:00 Petang</strong>.</p>
-                        </div>
-
-                        <!-- Actual Form -->
-                        <form id="form-hari1" class="hidden-section space-y-5 mt-4" onsubmit="submitAttendance(event, 1)">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div class="col-span-1 md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama (Seperti dalam Kad Pengenalan) *</label>
-                                    <input type="text" id="nama1" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Cth: ALI BIN ABU">
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penuh (Huruf Besar) *</label>
+                                    <input type="text" id="nama1" name="nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-sm" placeholder="Cth: ALI BIN ABU">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">No. Kad Pengenalan *</label>
-                                    <input type="text" id="ic1" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Tanpa '-' (Cth: 900101123456)">
+                                    <input type="text" id="ic1" name="ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Nombor Telefon *</label>
-                                    <input type="tel" id="tel1" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Cth: 0123456789">
+                                    <input type="tel" id="tel1" name="telefon" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition text-sm" placeholder="Cth: 0123456789">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Jawatan *</label>
-                                    <select required id="jawatan1" onchange="toggleLainLain('jawatan1', 'lain1')" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition bg-white">
-                                        <option value="" disabled selected>Sila Pilih Jawatan</option>
+                                    <select required id="jawatan1" name="jawatan" onchange="toggleLainLain('jawatan1', 'lain1')" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none bg-white text-sm">
+                                        <option value="" disabled selected>Pilih Jawatan</option>
                                         <option value="Pegawai Perubatan">Pegawai Perubatan</option>
                                         <option value="Penolong Pegawai Perubatan">Penolong Pegawai Perubatan</option>
                                         <option value="Penyelia Jururawat Kesihatan">Penyelia Jururawat Kesihatan</option>
@@ -253,35 +238,35 @@
                                         <option value="Jururawat Terlatih">Jururawat Terlatih</option>
                                         <option value="Lain-lain">Lain-lain – Sila nyatakan</option>
                                     </select>
-                                    <input type="text" id="lain1" class="hidden-section w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Nyatakan jawatan anda">
+                                    <input type="text" id="lain1" class="hidden-section w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:ring-2 focus:ring-green-500 outline-none text-sm" placeholder="Nyatakan jawatan anda">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Gred Jawatan *</label>
-                                    <input type="text" id="gred1" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Cth: UD41 / U29">
+                                    <input type="text" id="gred1" name="gred" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none text-sm" placeholder="Cth: UD41 / U29">
                                 </div>
-                                <div class="col-span-1 md:col-span-2">
+                                <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Tempat Bertugas *</label>
-                                    <select required id="tempat1" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition bg-white">
-                                        <option value="" disabled selected>Sila Pilih Tempat Bertugas</option>
-                                        <option value="Klinik Kesihatan Batu Puteh">Klinik Kesihatan Batu Puteh</option>
-                                        <option value="Klinik Kesihatan Bukit Garam">Klinik Kesihatan Bukit Garam</option>
-                                        <option value="Klinik Kesihatan Ibu Dan Anak">Klinik Kesihatan Ibu Dan Anak</option>
-                                        <option value="Klinik Kesihatan Kuamut">Klinik Kesihatan Kuamut</option>
-                                        <option value="Klinik Kesihatan Suan Lamba">Klinik Kesihatan Suan Lamba</option>
-                                        <option value="Klinik Kesihatan Sukau">Klinik Kesihatan Sukau</option>
-                                        <option value="Klinik Kesihatan Entilibon">Klinik Kesihatan Entilibon</option>
-                                        <option value="Klinik Kesihatan Karamuak">Klinik Kesihatan Karamuak</option>
-                                        <option value="Klinik Kesihatan Mengkawagu">Klinik Kesihatan Mengkawagu</option>
-                                        <option value="Klinik Kesihatan Minusoh">Klinik Kesihatan Minusoh</option>
-                                        <option value="Klinik Kesihatan Penangah">Klinik Kesihatan Penangah</option>
-                                        <option value="Klinik Kesihatan Tongod">Klinik Kesihatan Tongod</option>
+                                    <select required id="tempat1" name="tempat" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none bg-white text-sm">
+                                        <option value="" disabled selected>Pilih Tempat Bertugas</option>
+                                        <option value="Klinik Kesihatan Batu Puteh">KK Batu Puteh</option>
+                                        <option value="Klinik Kesihatan Bukit Garam">KK Bukit Garam</option>
+                                        <option value="Klinik Kesihatan Ibu Dan Anak">KK Ibu Dan Anak</option>
+                                        <option value="Klinik Kesihatan Kuamut">KK Kuamut</option>
+                                        <option value="Klinik Kesihatan Suan Lamba">KK Suan Lamba</option>
+                                        <option value="Klinik Kesihatan Sukau">KK Sukau</option>
+                                        <option value="Klinik Kesihatan Entilibon">KK Entilibon</option>
+                                        <option value="Klinik Kesihatan Karamuak">KK Karamuak</option>
+                                        <option value="Klinik Kesihatan Mengkawagu">KK Mengkawagu</option>
+                                        <option value="Klinik Kesihatan Minusoh">KK Minusoh</option>
+                                        <option value="Klinik Kesihatan Penangah">KK Penangah</option>
+                                        <option value="Klinik Kesihatan Tongod">KK Tongod</option>
                                         <option value="Hospital Kinabatangan">Hospital Kinabatangan</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="pt-2">
-                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm flex justify-center items-center gap-2">
-                                    Hantar Makluman Kehadiran
+                            <div class="pt-4">
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-md flex justify-center items-center gap-2">
+                                    Hantar Kehadiran Hari 1
                                 </button>
                             </div>
                         </form>
@@ -289,56 +274,43 @@
                 </div>
 
                 <div id="section-kehadiran-hari2" class="hidden-section fade-in">
-                    <button onclick="showSubmenu('kehadiran')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali ke Pilihan Kehadiran
+                    <button onclick="showSubmenu('kehadiran')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <section class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                        <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
-                            <h2 class="text-lg font-bold text-gray-800">Makluman Kehadiran (Hari 2: 29 Oktober)</h2>
+                    <section class="bg-white rounded-xl shadow-md p-4 sm:p-6 border border-gray-100">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 pb-4 border-b border-gray-100 gap-2">
+                            <h2 class="text-lg font-bold text-gray-800">Kehadiran (Hari 2: 29 Okt)</h2>
                             <span id="status-hari2" class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700">Ditutup</span>
                         </div>
 
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
-                            <div class="flex">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm text-blue-700 font-medium">
-                                        PENTING: Sila pastikan Nama dan No. Kad Pengenalan adalah TEPAT dan SAMA seperti Hari Pertama untuk membolehkan sistem menjana e-Sijil anda.
-                                    </p>
-                                </div>
+                        <div id="locked-msg-hari2" class="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900" id="locked-title-hari2">Borang Kehadiran Ditutup</h3>
+                            <p class="mt-1 text-xs sm:text-sm text-gray-500" id="locked-desc-hari2">Borang akan dibuka dari <strong class="text-gray-700">4:00 PM hingga 6:00 PM</strong>.</p>
+                        </div>
+
+                        <form id="form-hari2" class="hidden-section space-y-4 mt-4" onsubmit="submitAttendance(event, 2)">
+                            <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 text-xs text-blue-700 font-medium mb-4">
+                                PENTING: Maklumat mesti tepat dan SAMA pada hari pertama & kedua untuk sistem menjana e-Sijil.
                             </div>
-                        </div>
-
-                        <div id="locked-msg-hari2" class="text-center py-10 bg-gray-50 rounded-lg border border-gray-200">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">Borang Kehadiran Belum Dibuka</h3>
-                            <p class="mt-1 text-sm text-gray-500">Borang kehadiran untuk hari kedua akan dibuka pada jam <strong class="text-gray-700">4:00 Petang</strong>.</p>
-                        </div>
-
-                        <form id="form-hari2" class="hidden-section space-y-5 mt-4" onsubmit="submitAttendance(event, 2)">
-                             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div class="col-span-1 md:col-span-2">
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama (Seperti dalam Kad Pengenalan) *</label>
-                                    <input type="text" id="nama2" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Cth: ALI BIN ABU">
+                            <!-- Format Sama Macam Hari 1 -->
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penuh (Huruf Besar) *</label>
+                                    <input type="text" id="nama2" name="nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none text-sm" placeholder="Cth: ALI BIN ABU">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">No. Kad Pengenalan *</label>
-                                    <input type="text" id="ic2" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Tanpa '-' (Cth: 900101123456)">
+                                    <input type="text" id="ic2" name="ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none text-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Nombor Telefon *</label>
-                                    <input type="tel" id="tel2" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Cth: 0123456789">
+                                    <input type="tel" id="tel2" name="telefon" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none text-sm" placeholder="Cth: 0123456789">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Jawatan *</label>
-                                    <select required id="jawatan2" onchange="toggleLainLain('jawatan2', 'lain2')" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition bg-white">
-                                        <option value="" disabled selected>Sila Pilih Jawatan</option>
+                                    <select required id="jawatan2" name="jawatan" onchange="toggleLainLain('jawatan2', 'lain2')" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none bg-white text-sm">
+                                        <option value="" disabled selected>Pilih Jawatan</option>
                                         <option value="Pegawai Perubatan">Pegawai Perubatan</option>
                                         <option value="Penolong Pegawai Perubatan">Penolong Pegawai Perubatan</option>
                                         <option value="Penyelia Jururawat Kesihatan">Penyelia Jururawat Kesihatan</option>
@@ -348,35 +320,35 @@
                                         <option value="Jururawat Terlatih">Jururawat Terlatih</option>
                                         <option value="Lain-lain">Lain-lain – Sila nyatakan</option>
                                     </select>
-                                    <input type="text" id="lain2" class="hidden-section w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Nyatakan jawatan anda">
+                                    <input type="text" id="lain2" class="hidden-section w-full border border-gray-300 rounded-lg px-4 py-2 mt-2 focus:ring-2 focus:ring-green-500 outline-none text-sm" placeholder="Nyatakan jawatan anda">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Gred Jawatan *</label>
-                                    <input type="text" id="gred2" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Cth: UD41 / U29">
+                                    <input type="text" id="gred2" name="gred" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none text-sm" placeholder="Cth: UD41 / U29">
                                 </div>
-                                <div class="col-span-1 md:col-span-2">
+                                <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Tempat Bertugas *</label>
-                                    <select required id="tempat2" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition bg-white">
-                                        <option value="" disabled selected>Sila Pilih Tempat Bertugas</option>
-                                        <option value="Klinik Kesihatan Batu Puteh">Klinik Kesihatan Batu Puteh</option>
-                                        <option value="Klinik Kesihatan Bukit Garam">Klinik Kesihatan Bukit Garam</option>
-                                        <option value="Klinik Kesihatan Ibu Dan Anak">Klinik Kesihatan Ibu Dan Anak</option>
-                                        <option value="Klinik Kesihatan Kuamut">Klinik Kesihatan Kuamut</option>
-                                        <option value="Klinik Kesihatan Suan Lamba">Klinik Kesihatan Suan Lamba</option>
-                                        <option value="Klinik Kesihatan Sukau">Klinik Kesihatan Sukau</option>
-                                        <option value="Klinik Kesihatan Entilibon">Klinik Kesihatan Entilibon</option>
-                                        <option value="Klinik Kesihatan Karamuak">Klinik Kesihatan Karamuak</option>
-                                        <option value="Klinik Kesihatan Mengkawagu">Klinik Kesihatan Mengkawagu</option>
-                                        <option value="Klinik Kesihatan Minusoh">Klinik Kesihatan Minusoh</option>
-                                        <option value="Klinik Kesihatan Penangah">Klinik Kesihatan Penangah</option>
-                                        <option value="Klinik Kesihatan Tongod">Klinik Kesihatan Tongod</option>
+                                    <select required id="tempat2" name="tempat" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-green-500 outline-none bg-white text-sm">
+                                        <option value="" disabled selected>Pilih Tempat Bertugas</option>
+                                        <option value="Klinik Kesihatan Batu Puteh">KK Batu Puteh</option>
+                                        <option value="Klinik Kesihatan Bukit Garam">KK Bukit Garam</option>
+                                        <option value="Klinik Kesihatan Ibu Dan Anak">KK Ibu Dan Anak</option>
+                                        <option value="Klinik Kesihatan Kuamut">KK Kuamut</option>
+                                        <option value="Klinik Kesihatan Suan Lamba">KK Suan Lamba</option>
+                                        <option value="Klinik Kesihatan Sukau">KK Sukau</option>
+                                        <option value="Klinik Kesihatan Entilibon">KK Entilibon</option>
+                                        <option value="Klinik Kesihatan Karamuak">KK Karamuak</option>
+                                        <option value="Klinik Kesihatan Mengkawagu">KK Mengkawagu</option>
+                                        <option value="Klinik Kesihatan Minusoh">KK Minusoh</option>
+                                        <option value="Klinik Kesihatan Penangah">KK Penangah</option>
+                                        <option value="Klinik Kesihatan Tongod">KK Tongod</option>
                                         <option value="Hospital Kinabatangan">Hospital Kinabatangan</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="pt-2">
-                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors shadow-sm flex justify-center items-center gap-2">
-                                    Hantar Makluman Kehadiran
+                            <div class="pt-4">
+                                <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md flex justify-center items-center gap-2">
+                                    Hantar Kehadiran Hari 2
                                 </button>
                             </div>
                         </form>
@@ -384,349 +356,293 @@
                 </div>
 
                 <div id="section-kehadiran-sijil" class="hidden-section fade-in">
-                    <button onclick="showSubmenu('kehadiran')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali ke Pilihan Kehadiran
+                    <button onclick="showSubmenu('kehadiran')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <section class="bg-white rounded-xl shadow-md p-8 border border-gray-100 text-center">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Semakan Kelayakan E-Sijil</h2>
-                        <p class="text-gray-600 mb-6">Sila masukkan No. Kad Pengenalan anda (Tanpa '-') untuk menyemak kelayakan.</p>
+                    <section class="bg-white rounded-xl shadow-md p-6 sm:p-8 border border-gray-100 text-center">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Semakan Kelayakan E-Sijil</h2>
+                        <p class="text-sm text-gray-600 mb-6">Sila masukkan No. Kad Pengenalan anda (Tanpa '-') untuk menyemak kelayakan.</p>
                         
                         <div class="max-w-xs mx-auto mb-6">
                             <input type="text" id="semak-ic" oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-center focus:ring-2 focus:ring-yellow-500 outline-none text-lg tracking-widest" placeholder="900101123456">
                         </div>
-                        <button onclick="semakSijil()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">Semak Sekarang</button>
+                        <button onclick="semakSijil()" class="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-full transition-colors shadow-md">Semak Sekarang</button>
                         
-                        <div id="keputusan-sijil" class="mt-8 hidden-section p-6 rounded-lg border"></div>
+                        <div id="keputusan-sijil" class="mt-8 hidden-section p-4 sm:p-6 rounded-lg border"></div>
                     </section>
                 </div>
-
             </div>
 
             <div id="content-ujian" class="hidden-section fade-in">
                 
-                <div id="submenu-ujian" class="flex flex-col gap-4 max-w-md mx-auto py-8">
-                    <h3 class="text-center font-semibold text-gray-500 mb-2">Pilih Hari Ujian</h3>
-                    
-                    <button onclick="showSubMenuUjian('hari1')" class="bg-white border border-gray-200 hover:border-blue-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                        <div class="flex items-center gap-4">
+                <div id="submenu-ujian" class="flex flex-col gap-4 max-w-md mx-auto py-2">
+                    <h3 class="text-center font-semibold text-gray-500 mb-2">Pilih Ujian</h3>
+                    <button onclick="showSubMenuUjian('hari1')" class="bg-white border border-gray-200 hover:border-blue-500 hover:shadow-md text-gray-800 font-semibold py-5 px-5 rounded-xl transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4 text-left">
                             <div class="bg-blue-100 p-2 rounded-lg text-blue-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
-                            <span>Ujian Hari Pertama (28 Okt)</span>
+                            <span class="block">Ujian Rabies (Hari 1)</span>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
-                    
-                    <button onclick="showSubMenuUjian('hari2')" class="bg-white border border-gray-200 hover:border-blue-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                        <div class="flex items-center gap-4">
+                    <button onclick="showSubMenuUjian('hari2')" class="bg-white border border-gray-200 hover:border-blue-500 hover:shadow-md text-gray-800 font-semibold py-5 px-5 rounded-xl transition flex items-center justify-between group">
+                        <div class="flex items-center gap-4 text-left">
                             <div class="bg-blue-100 p-2 rounded-lg text-blue-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>
-                            <span>Ujian Hari Kedua (29 Okt)</span>
+                            <span class="block">Ujian Survelan (Hari 2)</span>
                         </div>
-                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-blue-600 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </button>
                 </div>
 
-                <div id="ujian-submenu-hari1" class="hidden-section flex flex-col gap-4 max-w-md mx-auto py-8">
-                    <button onclick="showSubmenu('ujian')" class="mb-2 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+                <!-- Submenu Ujian Hari 1 -->
+                <div id="ujian-submenu-hari1" class="hidden-section flex flex-col gap-4 max-w-md mx-auto py-2">
+                    <button onclick="showSubmenu('ujian')" class="mb-2 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm w-max">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <h3 class="text-center font-semibold text-gray-800 mb-2">Ujian Hari Pertama (28 Okt)</h3>
+                    <h3 class="text-center font-semibold text-gray-800 mb-2">Ujian Rabies (Hari 1)</h3>
                     
-                    <div class="relative">
-                        <button onclick="showSection('ujian', 'pretest1')" id="btn-pre1" class="w-full bg-white border border-gray-200 hover:border-blue-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                            <span>Pre-Test</span>
-                            <span id="status-pre1" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Ditutup</span>
-                        </button>
-                    </div>
-                    <div class="relative">
-                        <button onclick="showSection('ujian', 'posttest1')" id="btn-post1" class="w-full bg-white border border-gray-200 hover:border-blue-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                            <span>Post-Test</span>
-                            <span id="status-post1" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Ditutup</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div id="ujian-submenu-hari2" class="hidden-section flex flex-col gap-4 max-w-md mx-auto py-8">
-                    <button onclick="showSubmenu('ujian')" class="mb-2 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+                    <button onclick="showSection('ujian', 'pretest1')" id="btn-pre1" class="w-full bg-white border border-gray-200 hover:border-blue-500 hover:shadow-md text-gray-800 font-semibold py-4 px-5 rounded-xl transition flex items-center justify-between group">
+                        <span>Pre-Test Rabies</span>
+                        <span id="status-pre1" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full whitespace-nowrap">Ditutup</span>
                     </button>
-                    <h3 class="text-center font-semibold text-gray-800 mb-2">Ujian Hari Kedua (29 Okt)</h3>
-                    
-                    <div class="relative">
-                        <button onclick="showSection('ujian', 'pretest2')" id="btn-pre2" class="w-full bg-white border border-gray-200 hover:border-blue-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                            <span>Pre-Test</span>
-                            <span id="status-pre2" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Ditutup</span>
-                        </button>
-                    </div>
-                    <div class="relative">
-                        <button onclick="showSection('ujian', 'posttest2')" id="btn-post2" class="w-full bg-white border border-gray-200 hover:border-blue-600 hover:shadow-md text-gray-800 font-semibold py-5 px-6 rounded-xl transition flex items-center justify-between group">
-                            <span>Post-Test</span>
-                            <span id="status-post2" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full">Ditutup</span>
-                        </button>
-                    </div>
+                    <button onclick="showSection('ujian', 'posttest1')" id="btn-post1" class="w-full bg-white border border-gray-200 hover:border-blue-500 hover:shadow-md text-gray-800 font-semibold py-4 px-5 rounded-xl transition flex items-center justify-between group">
+                        <span>Post-Test Rabies</span>
+                        <span id="status-post1" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full whitespace-nowrap">Ditutup</span>
+                    </button>
                 </div>
 
+                <!-- Submenu Ujian Hari 2 -->
+                <div id="ujian-submenu-hari2" class="hidden-section flex flex-col gap-4 max-w-md mx-auto py-2">
+                    <button onclick="showSubmenu('ujian')" class="mb-2 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm w-max">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
+                    </button>
+                    <h3 class="text-center font-semibold text-gray-800 mb-2">Ujian Survelan (Hari 2)</h3>
+                    
+                    <button onclick="showSection('ujian', 'pretest2')" id="btn-pre2" class="w-full bg-white border border-gray-200 hover:border-blue-500 hover:shadow-md text-gray-800 font-semibold py-4 px-5 rounded-xl transition flex items-center justify-between group">
+                        <span>Pre-Test Survelan</span>
+                        <span id="status-pre2" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full whitespace-nowrap">Ditutup</span>
+                    </button>
+                    <button onclick="showSection('ujian', 'posttest2')" id="btn-post2" class="w-full bg-white border border-gray-200 hover:border-blue-500 hover:shadow-md text-gray-800 font-semibold py-4 px-5 rounded-xl transition flex items-center justify-between group">
+                        <span>Post-Test Survelan</span>
+                        <span id="status-post2" class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded-full whitespace-nowrap">Ditutup</span>
+                    </button>
+                </div>
+
+                <!-- Template Ujian: Pre-Test 1 -->
                 <div id="section-pretest1" class="hidden-section fade-in">
-                    <button onclick="showSubMenuUjian('hari1')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali ke Ujian Hari 1
+                    <button onclick="showSubMenuUjian('hari1')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <section class="bg-white rounded-xl shadow-md p-8 border border-gray-100">
-                        <div class="text-center pb-6 border-b border-gray-100 mb-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-2">Pre-Test (Hari 1)</h2>
+                    <section class="bg-white rounded-xl shadow-md p-4 sm:p-6 border border-gray-100">
+                        <div class="text-center pb-4 border-b border-gray-100 mb-4">
+                            <h2 class="text-lg font-bold text-gray-800">Pre-Test Rabies (Hari 1)</h2>
                         </div>
                         <div id="locked-msg-pre1" class="text-center py-10 bg-gray-50 rounded-lg border border-gray-200 hidden-section">
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">Ujian Belum Dibuka</h3>
-                            <p class="mt-1 text-sm text-gray-500">Sesi ujian ini akan dibuka apabila tiba masanya mengikut tentatif.</p>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">Sesi Belum Dibuka</h3>
                         </div>
-                        <div id="pretest-intro1" class="text-center py-6">
-                            <button type="button" onclick="startTestUI('preTestForm1', 'pretest-intro1')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-10 rounded-full transition-colors shadow-md">
-                                Mula Pre-Test 1
+                        <div id="pretest-intro1" class="text-center py-8">
+                            <button type="button" onclick="startDynamicTest('preTestForm1', 'pretest-intro1', 'hari1', 'pre1')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors shadow-md">
+                                Mula Menjawab Pre-Test
                             </button>
                         </div>
-                        <form id="preTestForm1" class="hidden-section space-y-6" onsubmit="submitTest(event, 'pre1')">
-                            <!-- Maklumat Peserta -->
-                            <div class="bg-blue-50 p-5 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
+                        <form id="preTestForm1" class="hidden-section space-y-6 mt-4" onsubmit="submitTest(event, 'pre1')">
+                            <div class="bg-blue-50 p-4 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
                                 <div>
-                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Seperti dalam IC) *</label>
-                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Cth: ALI BIN ABU">
+                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Huruf Besar) *</label>
+                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Cth: ALI BIN ABU">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-blue-900 mb-1">No. Kad Pengenalan *</label>
-                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
+                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
                                 </div>
                             </div>
-                            <!-- Soalan Pre Test 1 -->
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">1. Apakah virus penyebab utama penyakit Rabies?</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre1_q1" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> Lyssavirus</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre1_q1" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> Flavivirus</label>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">2. Bagaimanakah jangkitan Rabies merebak kepada manusia?</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre1_q2" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> Melalui udara</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre1_q2" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> Gigitan haiwan berjangkit</label>
-                                </div>
-                            </div>
+                            <!-- Container Soalan Dinamik -->
+                            <div id="questions-container-pre1" class="space-y-4"></div>
+                            
                             <div class="pt-4 text-right">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-8 rounded-lg transition-colors">Hantar Jawapan</button>
+                                <button type="submit" id="submit-btn-pre1" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-colors hidden-section">Hantar Jawapan</button>
                             </div>
                         </form>
                     </section>
                 </div>
 
+                <!-- Template Ujian: Post-Test 1 -->
                 <div id="section-posttest1" class="hidden-section fade-in">
-                    <button onclick="showSubMenuUjian('hari1')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali ke Ujian Hari 1
+                    <button onclick="showSubMenuUjian('hari1')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <section class="bg-white rounded-xl shadow-md p-8 border border-gray-100">
-                        <div class="text-center pb-6 border-b border-gray-100 mb-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-2">Post-Test (Hari 1)</h2>
+                    <section class="bg-white rounded-xl shadow-md p-4 sm:p-6 border border-gray-100">
+                        <div class="text-center pb-4 border-b border-gray-100 mb-4">
+                            <h2 class="text-lg font-bold text-gray-800">Post-Test Rabies (Hari 1)</h2>
                         </div>
                         <div id="locked-msg-post1" class="text-center py-10 bg-gray-50 rounded-lg border border-gray-200 hidden-section">
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">Ujian Belum Dibuka</h3>
-                            <p class="mt-1 text-sm text-gray-500">Sesi ujian ini akan dibuka apabila tiba masanya mengikut tentatif.</p>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">Sesi Belum Dibuka</h3>
                         </div>
-                        <div id="posttest-intro1" class="text-center py-6">
-                            <button type="button" onclick="startTestUI('postTestForm1', 'posttest-intro1')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-10 rounded-full transition-colors shadow-md">
-                                Mula Post-Test 1
+                        <div id="posttest-intro1" class="text-center py-8">
+                            <button type="button" onclick="startDynamicTest('postTestForm1', 'posttest-intro1', 'hari1', 'post1')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors shadow-md">
+                                Mula Menjawab Post-Test
                             </button>
                         </div>
-                        <form id="postTestForm1" class="hidden-section space-y-6" onsubmit="submitTest(event, 'post1')">
-                            <!-- Maklumat Peserta -->
-                            <div class="bg-blue-50 p-5 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
+                        <form id="postTestForm1" class="hidden-section space-y-6 mt-4" onsubmit="submitTest(event, 'post1')">
+                            <div class="bg-blue-50 p-4 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
                                 <div>
-                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Seperti dalam IC) *</label>
-                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Cth: ALI BIN ABU">
+                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Huruf Besar) *</label>
+                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Cth: ALI BIN ABU">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-blue-900 mb-1">No. Kad Pengenalan *</label>
-                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
+                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
                                 </div>
                             </div>
-                            <!-- Soalan Post Test 1 -->
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">1. Rawatan 'Post-Exposure Prophylaxis' (PEP) untuk Rabies termasuklah:</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post1_q1" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> Pemberian antibiotik semata-mata</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post1_q1" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> Cuci luka, Vaksin Rabies & RIG</label>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">2. Tempoh pemerhatian untuk haiwan berisiko yang menggigit adalah:</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post1_q2" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> 14 Hari</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post1_q2" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> 3 Hari</label>
-                                </div>
-                            </div>
+                            <div id="questions-container-post1" class="space-y-4"></div>
                             <div class="pt-4 text-right">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-8 rounded-lg transition-colors">Hantar Jawapan</button>
+                                <button type="submit" id="submit-btn-post1" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-colors hidden-section">Hantar Jawapan</button>
                             </div>
                         </form>
                     </section>
                 </div>
 
+                <!-- Template Ujian: Pre-Test 2 -->
                 <div id="section-pretest2" class="hidden-section fade-in">
-                    <button onclick="showSubMenuUjian('hari2')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali ke Ujian Hari 2
+                    <button onclick="showSubMenuUjian('hari2')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <section class="bg-white rounded-xl shadow-md p-8 border border-gray-100">
-                        <div class="text-center pb-6 border-b border-gray-100 mb-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-2">Pre-Test (Hari 2)</h2>
+                    <section class="bg-white rounded-xl shadow-md p-4 sm:p-6 border border-gray-100">
+                        <div class="text-center pb-4 border-b border-gray-100 mb-4">
+                            <h2 class="text-lg font-bold text-gray-800">Pre-Test Survelan (Hari 2)</h2>
                         </div>
                         <div id="locked-msg-pre2" class="text-center py-10 bg-gray-50 rounded-lg border border-gray-200 hidden-section">
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">Ujian Belum Dibuka</h3>
-                            <p class="mt-1 text-sm text-gray-500">Sesi ujian ini akan dibuka apabila tiba masanya mengikut tentatif.</p>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">Sesi Belum Dibuka</h3>
                         </div>
-                        <div id="pretest-intro2" class="text-center py-6">
-                            <button type="button" onclick="startTestUI('preTestForm2', 'pretest-intro2')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-10 rounded-full transition-colors shadow-md">
-                                Mula Pre-Test 2
+                        <div id="pretest-intro2" class="text-center py-8">
+                            <button type="button" onclick="startDynamicTest('preTestForm2', 'pretest-intro2', 'hari2', 'pre2')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors shadow-md">
+                                Mula Menjawab Pre-Test
                             </button>
                         </div>
-                        <form id="preTestForm2" class="hidden-section space-y-6" onsubmit="submitTest(event, 'pre2')">
-                            <!-- Maklumat Peserta -->
-                            <div class="bg-blue-50 p-5 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
+                        <form id="preTestForm2" class="hidden-section space-y-6 mt-4" onsubmit="submitTest(event, 'pre2')">
+                            <div class="bg-blue-50 p-4 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
                                 <div>
-                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Seperti dalam IC) *</label>
-                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Cth: ALI BIN ABU">
+                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Huruf Besar) *</label>
+                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Cth: ALI BIN ABU">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-blue-900 mb-1">No. Kad Pengenalan *</label>
-                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
+                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
                                 </div>
                             </div>
-                            <!-- Soalan Pre Test 2 -->
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">1. Haiwan utama penyebar Rabies di Sarawak & Sabah adalah:</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre2_q1" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> Kucing</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre2_q1" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> Anjing</label>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">2. Apakah tindakan PERTAMA bila digigit anjing disyaki Rabies?</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre2_q2" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> Cuci luka dengan air mengalir dan sabun (15 minit)</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="pre2_q2" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> Sapu ubat gamat atau povidone</label>
-                                </div>
-                            </div>
+                            <div id="questions-container-pre2" class="space-y-4"></div>
                             <div class="pt-4 text-right">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-8 rounded-lg transition-colors">Hantar Jawapan</button>
+                                <button type="submit" id="submit-btn-pre2" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-colors hidden-section">Hantar Jawapan</button>
                             </div>
                         </form>
                     </section>
                 </div>
 
+                <!-- Template Ujian: Post-Test 2 -->
                 <div id="section-posttest2" class="hidden-section fade-in">
-                    <button onclick="showSubMenuUjian('hari2')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali ke Ujian Hari 2
+                    <button onclick="showSubMenuUjian('hari2')" class="mb-4 text-gray-500 hover:text-gray-800 flex items-center gap-2 font-medium transition text-sm bg-white border px-3 py-1.5 rounded-full shadow-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> Kembali
                     </button>
-                    <section class="bg-white rounded-xl shadow-md p-8 border border-gray-100">
-                        <div class="text-center pb-6 border-b border-gray-100 mb-6">
-                            <h2 class="text-xl font-bold text-gray-800 mb-2">Post-Test (Hari 2)</h2>
+                    <section class="bg-white rounded-xl shadow-md p-4 sm:p-6 border border-gray-100">
+                        <div class="text-center pb-4 border-b border-gray-100 mb-4">
+                            <h2 class="text-lg font-bold text-gray-800">Post-Test Survelan (Hari 2)</h2>
                         </div>
                         <div id="locked-msg-post2" class="text-center py-10 bg-gray-50 rounded-lg border border-gray-200 hidden-section">
-                            <h3 class="mt-2 text-sm font-medium text-gray-900">Ujian Belum Dibuka</h3>
-                            <p class="mt-1 text-sm text-gray-500">Sesi ujian ini akan dibuka apabila tiba masanya mengikut tentatif.</p>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">Sesi Belum Dibuka</h3>
                         </div>
-                        <div id="posttest-intro2" class="text-center py-6">
-                            <button type="button" onclick="startTestUI('postTestForm2', 'posttest-intro2')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-10 rounded-full transition-colors shadow-md">
-                                Mula Post-Test 2
+                        <div id="posttest-intro2" class="text-center py-8">
+                            <button type="button" onclick="startDynamicTest('postTestForm2', 'posttest-intro2', 'hari2', 'post2')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-full transition-colors shadow-md">
+                                Mula Menjawab Post-Test
                             </button>
                         </div>
-                        <form id="postTestForm2" class="hidden-section space-y-6" onsubmit="submitTest(event, 'post2')">
-                            <!-- Maklumat Peserta -->
-                            <div class="bg-blue-50 p-5 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
+                        <form id="postTestForm2" class="hidden-section space-y-6 mt-4" onsubmit="submitTest(event, 'post2')">
+                            <div class="bg-blue-50 p-4 rounded-xl space-y-4 mb-4 border border-blue-100 shadow-sm">
                                 <div>
-                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Seperti dalam IC) *</label>
-                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Cth: ALI BIN ABU">
+                                    <label class="block text-sm font-medium text-blue-900 mb-1">Nama Penuh (Huruf Besar) *</label>
+                                    <input type="text" name="test_nama" required oninput="this.value = this.value.toUpperCase()" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Cth: ALI BIN ABU">
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-blue-900 mb-1">No. Kad Pengenalan *</label>
-                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
+                                    <input type="text" name="test_ic" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" maxlength="12" minlength="12" class="w-full border border-white rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-blue-500 outline-none text-sm" placeholder="Tanpa '-' (Cth: 900101123456)">
                                 </div>
                             </div>
-                            <!-- Soalan Post Test 2 -->
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">1. Bilakah sampel otak haiwan patut dihantar ke makmal DVS?</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post2_q1" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> Serta merta jika haiwan mati/terbunuh</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post2_q1" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> Selepas 1 bulan</label>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg">
-                                <label class="block font-medium text-gray-800 mb-3">2. Adakah pesakit manusia yang telah dijangkiti Rabies dan bergejala boleh diselamatkan?</label>
-                                <div class="space-y-2">
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post2_q2" value="wrong" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required> Ya, dengan antibiotik yang kuat</label>
-                                    <label class="flex items-center p-2 rounded hover:bg-gray-100 cursor-pointer transition"><input type="radio" name="post2_q2" value="correct" class="mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500"> Hampir 100% kes akan membawa maut</label>
-                                </div>
-                            </div>
+                            <div id="questions-container-post2" class="space-y-4"></div>
                             <div class="pt-4 text-right">
-                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-8 rounded-lg transition-colors">Hantar Jawapan</button>
+                                <button type="submit" id="submit-btn-post2" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg shadow-md transition-colors hidden-section">Hantar Jawapan</button>
                             </div>
                         </form>
                     </section>
                 </div>
             </div>
 
-            <div id="content-slaid" class="hidden-section fade-in text-center py-12">
+            <div id="content-slaid" class="hidden-section fade-in text-center py-10 px-4">
                 <div class="bg-orange-50 p-6 rounded-full inline-flex items-center justify-center mb-6 shadow-sm border border-orange-100">
-                    <svg class="w-16 h-16 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    <svg class="w-12 h-12 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Slaid & Bahan Bengkel</h2>
-                <p class="text-gray-600 mb-8 max-w-md mx-auto text-lg">Semua bahan pembentangan dan slaid bengkel boleh didapati dan dimuat turun dari folder Google Drive.</p>
-                <a href="https://drive.google.com/drive/folders/18wZcTYuC0pxbdpND4hG37u2A3lC2kSsM?usp=drive_link" target="_blank" class="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-10 rounded-full transition transform hover:-translate-y-1 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">Slaid & Bahan Bengkel</h2>
+                <p class="text-sm text-gray-600 mb-8 max-w-md mx-auto">Semua bahan pembentangan dan slaid bengkel boleh didapati dan dimuat turun dari folder Google Drive.</p>
+                <a href="https://drive.google.com/drive/folders/18wZcTYuC0pxbdpND4hG37u2A3lC2kSsM?usp=drive_link" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 px-8 rounded-full transition shadow-md">
                     <span>Buka Pautan Slaid</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
             </div>
 
-            <div id="content-gambar" class="hidden-section fade-in text-center py-12">
+            <div id="content-gambar" class="hidden-section fade-in text-center py-10 px-4">
                 <div class="bg-purple-50 p-6 rounded-full inline-flex items-center justify-center mb-6 shadow-sm border border-purple-100">
-                    <svg class="w-16 h-16 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <svg class="w-12 h-12 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Galeri Gambar Program</h2>
-                <p class="text-gray-600 mb-8 max-w-md mx-auto text-lg">Gambar-gambar kenangan sepanjang bengkel berlangsung telah dimuat naik ke dalam folder Google Drive. Sila klik pautan di bawah untuk melihat dan memuat turun.</p>
-                <a href="https://drive.google.com/drive/folders/1qmYO3K8W0O4gg996WDagN6BEUyzmqp6D?usp=drive_link" target="_blank" class="inline-flex items-center gap-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-10 rounded-full transition transform hover:-translate-y-1 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">Galeri Gambar Program</h2>
+                <p class="text-sm text-gray-600 mb-8 max-w-md mx-auto">Gambar-gambar kenangan sepanjang bengkel berlangsung telah dimuat naik ke dalam folder Google Drive. Sila klik pautan di bawah.</p>
+                <a href="https://drive.google.com/drive/folders/1qmYO3K8W0O4gg996WDagN6BEUyzmqp6D?usp=drive_link" target="_blank" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 px-8 rounded-full transition shadow-md">
                     <span>Buka Pautan Gambar</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
             </div>
         </main>
     </div> 
 
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden-section" style="display: none;">
-        <div class="bg-white rounded-xl shadow-2xl p-8 max-w-sm w-full mx-4 modal-animate text-center">
-            <div id="modal-icon" class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-4">
-                <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h3 id="modal-title" class="text-xl font-bold text-gray-900 mb-2">Berjaya!</h3>
-            <p id="modal-msg" class="text-gray-600 mb-6">Maklumat anda telah direkodkan.</p>
-            <button onclick="closeModal()" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition">Tutup</button>
+    <!-- Modal Pop-Up (Sijil/Makluman) -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center hidden-section backdrop-blur-sm" style="display: none;">
+        <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 max-w-sm w-full mx-4 fade-in text-center border border-gray-100">
+            <h3 id="modal-title" class="text-lg font-bold text-gray-900 mb-2 border-b pb-2">Status</h3>
+            <p id="modal-msg" class="text-sm text-gray-700 mb-6 mt-4">Mesej dipaparkan di sini.</p>
+            <button onclick="closeModal()" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-medium py-2.5 px-4 rounded-lg transition shadow">Tutup</button>
         </div>
     </div>
 
     <script>
+        // --- DATA UJIAN DINAMIK ---
+        const quizURLs = {
+            hari1: 'https://script.google.com/macros/s/AKfycbyzTtaYJG5pvaTw--mphZ4XK8h-YH74JOJBKusXoUMuRUt1hJA1sQeN75XmBF_cuNkxfw/exec', // Rabies
+            hari2: 'https://script.google.com/macros/s/AKfycbxgh8O4ovxgHoznXc-pScWHMBsx60i9n1lFMubRFcwAIrE57GD8mb_Gn59XLHh-g2LIBQ/exec' // Survelan
+        };
+        // Menyimpan data soalan yang telah di fetch
+        let storedQuizData = {};
+
+        // --- SISTEM NAVIGASI (MOBILE FIX) ---
         function enterApp() {
-            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('landing-page').classList.add('hidden-section');
             document.getElementById('initial-tabs-view').classList.remove('hidden-section');
+            window.scrollTo(0,0);
         }
 
         function backToMainMenu() {
             document.getElementById('main-app').classList.add('hidden-section');
             document.getElementById('initial-tabs-view').classList.remove('hidden-section');
+            window.scrollTo(0,0);
         }
 
         function backToHome() {
             document.getElementById('main-app').classList.add('hidden-section');
             document.getElementById('initial-tabs-view').classList.add('hidden-section');
-            document.getElementById('landing-page').style.display = 'flex';
+            document.getElementById('landing-page').classList.remove('hidden-section');
+            window.scrollTo(0,0);
         }
 
         function enterMainApp(tabId) {
             document.getElementById('initial-tabs-view').classList.add('hidden-section');
             document.getElementById('main-app').classList.remove('hidden-section');
             switchTab(tabId);
+            window.scrollTo(0,0);
         }
 
         function switchTab(tabId) {
@@ -734,9 +650,7 @@
             
             tabs.forEach(t => {
                 const contentEl = document.getElementById('content-' + t);
-                if (contentEl) {
-                    contentEl.classList.add('hidden-section');
-                }
+                if (contentEl) contentEl.classList.add('hidden-section');
                 
                 const tabBtn = document.getElementById('tab-' + t);
                 if(tabBtn) {
@@ -750,54 +664,14 @@
             });
 
             const targetContentEl = document.getElementById('content-' + tabId);
-            if (targetContentEl) {
-                targetContentEl.classList.remove('hidden-section');
-            }
+            if (targetContentEl) targetContentEl.classList.remove('hidden-section');
             
             const activeTabBtn = document.getElementById('tab-' + tabId);
             if(activeTabBtn) {
                 activeTabBtn.classList.remove('tab-inactive');
                 activeTabBtn.classList.add('tab-active');
+                activeTabBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' }); // Auto scroll tab
             }
-        }
-
-        function showSection(category, sectionType) {
-            document.getElementById('submenu-' + category).classList.add('hidden-section');
-            
-            if (category === 'kehadiran') {
-                document.getElementById('section-kehadiran-hari1').classList.add('hidden-section');
-                document.getElementById('section-kehadiran-hari2').classList.add('hidden-section');
-                document.getElementById('section-kehadiran-sijil').classList.add('hidden-section');
-                document.getElementById('section-kehadiran-' + sectionType).classList.remove('hidden-section');
-            } else if (category === 'ujian') {
-                document.getElementById('ujian-submenu-hari1').classList.add('hidden-section');
-                document.getElementById('ujian-submenu-hari2').classList.add('hidden-section');
-                
-                const sections = ['pretest1', 'posttest1', 'pretest2', 'posttest2'];
-                sections.forEach(s => {
-                    const el = document.getElementById('section-' + s);
-                    if (el) el.classList.add('hidden-section');
-                });
-                
-                const targetSection = document.getElementById('section-' + sectionType);
-                if (targetSection) targetSection.classList.remove('hidden-section');
-            }
-        }
-
-        function showSubMenuUjian(hari) {
-            document.getElementById('submenu-ujian').classList.add('hidden-section');
-            
-            document.getElementById('ujian-submenu-hari1').classList.add('hidden-section');
-            document.getElementById('ujian-submenu-hari2').classList.add('hidden-section');
-            
-            // Tambahan: Sembunyikan semua borang soalan yang sedang aktif bila kembali ke menu
-            const sections = ['pretest1', 'posttest1', 'pretest2', 'posttest2'];
-            sections.forEach(s => {
-                const el = document.getElementById('section-' + s);
-                if (el) el.classList.add('hidden-section');
-            });
-            
-            document.getElementById('ujian-submenu-' + hari).classList.remove('hidden-section');
         }
 
         function showSubmenu(category) {
@@ -807,9 +681,11 @@
             submenuEl.classList.remove('hidden-section');
             
             if (category === 'kehadiran') {
-                if (document.getElementById('section-kehadiran-hari1')) document.getElementById('section-kehadiran-hari1').classList.add('hidden-section');
-                if (document.getElementById('section-kehadiran-hari2')) document.getElementById('section-kehadiran-hari2').classList.add('hidden-section');
-                if (document.getElementById('section-kehadiran-sijil')) document.getElementById('section-kehadiran-sijil').classList.add('hidden-section');
+                const els = ['section-kehadiran-hari1', 'section-kehadiran-hari2', 'section-kehadiran-sijil'];
+                els.forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.classList.add('hidden-section');
+                });
             } else if (category === 'ujian') {
                 if (document.getElementById('ujian-submenu-hari1')) document.getElementById('ujian-submenu-hari1').classList.add('hidden-section');
                 if (document.getElementById('ujian-submenu-hari2')) document.getElementById('ujian-submenu-hari2').classList.add('hidden-section');
@@ -826,19 +702,134 @@
                     if (formEl) formEl.classList.add('hidden-section');
                 });
             }
+            window.scrollTo(0,0);
         }
 
-        function startTestUI(formId, introId) {
-            const introEl = document.getElementById(introId);
-            const formEl = document.getElementById(formId);
-            if (introEl) introEl.classList.add('hidden-section');
-            if (formEl) formEl.classList.remove('hidden-section');
+        function showSection(category, sectionType) {
+            document.getElementById('submenu-' + category).classList.add('hidden-section');
+            
+            if (category === 'kehadiran') {
+                document.getElementById('section-kehadiran-' + sectionType).classList.remove('hidden-section');
+            } else if (category === 'ujian') {
+                document.getElementById('ujian-submenu-hari1').classList.add('hidden-section');
+                document.getElementById('ujian-submenu-hari2').classList.add('hidden-section');
+                document.getElementById('section-' + sectionType).classList.remove('hidden-section');
+            }
+            window.scrollTo(0,0);
         }
 
+        function showSubMenuUjian(hari) {
+            document.getElementById('submenu-ujian').classList.add('hidden-section');
+            document.getElementById('ujian-submenu-' + hari).classList.remove('hidden-section');
+            
+            const sections = ['pretest1', 'posttest1', 'pretest2', 'posttest2'];
+            sections.forEach(s => {
+                const el = document.getElementById('section-' + s);
+                if (el) el.classList.add('hidden-section');
+            });
+            window.scrollTo(0,0);
+        }
+
+        // --- DEV MODE & LOGIK MASA ---
+        let isDevMode = false;
+
+        function activateDevMode() {
+            let password = prompt("Sila masukkan kata laluan untuk Dev Mode:");
+            if (password === "cdcpkkbn.2025") {
+                isDevMode = true;
+                alert("Dev Mode Diaktifkan! Semua sekatan masa telah dibuka.");
+                checkTimeLogic();
+            } else if (password !== null) {
+                alert("Kata laluan salah! Akses ditolak.");
+            }
+        }
+
+        function checkTimeLogic() {
+            const devMode = isDevMode;
+            const now = new Date();
+            
+            // Konfigurasi Masa (Diubah ikut kehendak baru: Kehadiran buka 4PM - 6PM)
+            const times = {
+                // Kehadiran Hari 1 (28 Okt): 16:00 hingga 18:00
+                kehadiran1: { start: new Date('2026-10-28T16:00:00'), end: new Date('2026-10-28T18:00:00') },
+                kehadiran2: { start: new Date('2026-10-29T16:00:00'), end: new Date('2026-10-29T18:00:00') },
+                pre1: { start: new Date('2026-10-28T08:30:00') },
+                post1: { start: new Date('2026-10-28T16:00:00') },
+                pre2: { start: new Date('2026-10-29T08:15:00') },
+                post2: { start: new Date('2026-10-29T15:00:00') }
+            };
+
+            const updateUI = (key, msgId, targetId, statusId, btnId, isAttendance = false) => {
+                const msgEl = document.getElementById(msgId);
+                const targetEl = document.getElementById(targetId);
+                const statusEl = document.getElementById(statusId);
+                const btnEl = document.getElementById(btnId); // Untuk menu ujian
+
+                if (!msgEl || !targetEl) return;
+
+                let isOpen = false;
+                let isPast = false;
+
+                if (devMode) {
+                    isOpen = true;
+                } else {
+                    if (isAttendance) {
+                        isOpen = (now >= times[key].start && now <= times[key].end);
+                        isPast = (now > times[key].end);
+                    } else {
+                        isOpen = (now >= times[key].start); // Ujian buka terus
+                    }
+                }
+
+                if (isOpen) {
+                    msgEl.classList.add('hidden-section');
+                    targetEl.classList.remove('hidden-section');
+                    
+                    if(statusEl) {
+                        statusEl.textContent = "Dibuka";
+                        statusEl.className = "px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700";
+                    }
+                    if(btnEl) {
+                        btnEl.classList.remove('opacity-50', 'cursor-not-allowed');
+                        btnEl.removeAttribute('disabled');
+                    }
+                } else {
+                    msgEl.classList.remove('hidden-section');
+                    targetEl.classList.add('hidden-section');
+                    
+                    // Kemas kini mesej ditutup (attendance)
+                    if (isAttendance && !devMode) {
+                        const titleEl = document.getElementById('locked-title-' + key.replace('kehadiran', 'hari'));
+                        const descEl = document.getElementById('locked-desc-' + key.replace('kehadiran', 'hari'));
+                        if (isPast && titleEl && descEl) {
+                            titleEl.textContent = "Borang Telah Ditutup";
+                            descEl.innerHTML = "Borang kehadiran telah ditutup pada jam <strong class='text-red-600'>6:00 Petang</strong>.";
+                        }
+                    }
+
+                    if(statusEl) {
+                        statusEl.textContent = "Ditutup";
+                        statusEl.className = "px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700";
+                    }
+                    if(btnEl) {
+                        btnEl.classList.add('opacity-50', 'cursor-not-allowed');
+                        btnEl.setAttribute('disabled', 'true');
+                    }
+                }
+            };
+
+            updateUI('kehadiran1', 'locked-msg-hari1', 'form-hari1', 'status-hari1', null, true);
+            updateUI('kehadiran2', 'locked-msg-hari2', 'form-hari2', 'status-hari2', null, true);
+            updateUI('pre1', 'locked-msg-pre1', 'pretest-intro1', 'status-pre1', 'btn-pre1');
+            updateUI('post1', 'locked-msg-post1', 'posttest-intro1', 'status-post1', 'btn-post1');
+            updateUI('pre2', 'locked-msg-pre2', 'pretest-intro2', 'status-pre2', 'btn-pre2');
+            updateUI('post2', 'locked-msg-post2', 'posttest-intro2', 'status-post2', 'btn-post2');
+        }
+
+        // --- SISTEM GOOGLE SHEETS API ---
         function toggleLainLain(selectId, inputId) {
             const selectEl = document.getElementById(selectId);
             const inputEl = document.getElementById(inputId);
-            
             if (selectEl && inputEl) {
                 if (selectEl.value === 'Lain-lain') {
                     inputEl.classList.remove('hidden-section');
@@ -851,86 +842,12 @@
             }
         }
 
-        function checkTimeLogic() {
-            const devModeCheckbox = document.getElementById('devMode');
-            const devMode = devModeCheckbox ? devModeCheckbox.checked : false;
-            const now = new Date();
-            
-            const times = {
-                kehadiran1: new Date('2026-10-28T16:00:00'),
-                kehadiran2: new Date('2026-10-29T16:00:00'),
-                pre1: new Date('2026-10-28T08:30:00'),
-                post1: new Date('2026-10-28T16:00:00'),
-                pre2: new Date('2026-10-29T08:15:00'),
-                post2: new Date('2026-10-29T15:00:00')
-            };
-
-            const updateUI = (key, msgId, formOrIntroId, statusId, btnId) => {
-                const msgEl = document.getElementById(msgId);
-                const targetEl = document.getElementById(formOrIntroId);
-                const statusEl = document.getElementById(statusId);
-                const btnEl = document.getElementById(btnId);
-
-                if (!msgEl || !targetEl) return; // Prevent null errors
-
-                if (devMode || now >= times[key]) {
-                    msgEl.classList.add('hidden-section');
-                    
-                    if (formOrIntroId.includes('intro')) {
-                        // For tests, just allow the intro to be visible. Form visibility is controlled by startTestUI
-                        targetEl.classList.remove('hidden-section');
-                    } else {
-                        targetEl.classList.remove('hidden-section');
-                    }
-                    
-                    if(statusEl) {
-                        statusEl.textContent = "Dibuka";
-                        statusEl.classList.replace('bg-red-100', 'bg-green-100');
-                        statusEl.classList.replace('text-red-700', 'text-green-700');
-                    }
-                    if(btnEl) {
-                        btnEl.classList.remove('opacity-50', 'cursor-not-allowed');
-                        btnEl.removeAttribute('disabled');
-                    }
-                } else {
-                    msgEl.classList.remove('hidden-section');
-                    targetEl.classList.add('hidden-section');
-                    
-                    if (formOrIntroId.includes('intro')) {
-                         const formEl = document.getElementById(formOrIntroId.replace('intro', 'Form'));
-                         if (formEl) formEl.classList.add('hidden-section');
-                    }
-
-                    if(statusEl) {
-                        statusEl.textContent = "Ditutup";
-                        statusEl.classList.replace('bg-green-100', 'bg-red-100');
-                        statusEl.classList.replace('text-green-700', 'text-red-700');
-                    }
-                    if(btnEl) {
-                        btnEl.classList.add('opacity-50', 'cursor-not-allowed');
-                        btnEl.setAttribute('disabled', 'true');
-                    }
-                }
-            };
-
-            updateUI('kehadiran1', 'locked-msg-hari1', 'form-hari1', 'status-hari1', null);
-            updateUI('kehadiran2', 'locked-msg-hari2', 'form-hari2', 'status-hari2', null);
-            
-            updateUI('pre1', 'locked-msg-pre1', 'pretest-intro1', 'status-pre1', 'btn-pre1');
-            updateUI('post1', 'locked-msg-post1', 'posttest-intro1', 'status-post1', 'btn-post1');
-
-            updateUI('pre2', 'locked-msg-pre2', 'pretest-intro2', 'status-pre2', 'btn-pre2');
-            updateUI('post2', 'locked-msg-post2', 'posttest-intro2', 'status-post2', 'btn-post2');
-        }
-
         function submitAttendance(e, day) {
             e.preventDefault();
-            
             const submitBtn = e.target.querySelector('button[type="submit"]');
-            if (!submitBtn) return;
-
             const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Menghantar...`;
+            
+            submitBtn.innerHTML = `<svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Menghantar...`;
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
             
@@ -938,11 +855,8 @@
             localStorage.setItem('kehadiran_hari' + day + '_ic', icVal);
 
             const urlAppsScript = "https://script.google.com/macros/s/AKfycbyzn9C2znn5ncToHhRPGUteuNq7bL3X7x02lgi4XalztEt-O1J6Sit5ToD_GTYk8oed/exec"; 
-            
             let jawatanVal = document.getElementById('jawatan' + day).value;
-            if (jawatanVal === 'Lain-lain') {
-                jawatanVal = document.getElementById('lain' + day).value;
-            }
+            if (jawatanVal === 'Lain-lain') jawatanVal = document.getElementById('lain' + day).value;
 
             const formData = new FormData();
             formData.append('hari', 'Hari ' + day);
@@ -953,18 +867,15 @@
             formData.append('gred', document.getElementById('gred' + day).value);
             formData.append('tempat', document.getElementById('tempat' + day).value);
 
-            fetch(urlAppsScript, { 
-                method: 'POST', 
-                body: formData 
-            })
-            .then(response => {
-                showModal('Berjaya!', `Makluman kehadiran Hari ${day} anda telah berjaya direkodkan. Sila pastikan anda turut mengisi pada hari yang satu lagi untuk mendapatkan e-Sijil.`);
+            fetch(urlAppsScript, { method: 'POST', body: formData, mode: 'no-cors' })
+            .then(() => {
+                showModal('Pendaftaran Berjaya', `Kehadiran Hari ${day} anda telah direkodkan. Sila pastikan maklumat yang sama digunakan pada hari seterusnya untuk sijil.`);
                 e.target.reset();
                 if(document.getElementById('lain' + day)) document.getElementById('lain' + day).classList.add('hidden-section');
+                showSubmenu('kehadiran');
             })
-            .catch(error => {
-                console.error('Error!', error.message);
-                showModal('Ralat', 'Maaf, terdapat masalah semasa cuba menghantar data. Sila periksa capaian internet anda dan cuba lagi.');
+            .catch(err => {
+                alert('Terdapat ralat semasa menghantar data. Pastikan internet anda aktif.');
             })
             .finally(() => {
                 submitBtn.innerHTML = originalBtnText;
@@ -973,37 +884,64 @@
             });
         }
 
-        function semakSijil() {
-            const semakIC = document.getElementById('semak-ic').value;
-            const resDiv = document.getElementById('keputusan-sijil');
-            resDiv.classList.remove('hidden-section');
+        // --- SISTEM UJIAN (FETCH GOOGLE SHEETS) ---
+        async function startDynamicTest(formId, introId, hariId, testId) {
+            const introEl = document.getElementById(introId);
+            const formEl = document.getElementById(formId);
+            const container = document.getElementById('questions-container-' + testId);
+            const submitBtn = document.getElementById('submit-btn-' + testId);
 
-            if(semakIC.length < 12) {
-                resDiv.className = "mt-8 p-6 rounded-lg border bg-red-50 border-red-200 text-red-700";
-                resDiv.innerHTML = "Sila masukkan No. Kad Pengenalan 12 digit yang sah.";
-                return;
-            }
+            introEl.classList.add('hidden-section');
+            formEl.classList.remove('hidden-section');
+            
+            // UI Loading Spinner
+            container.innerHTML = `
+                <div class="text-center py-10">
+                    <svg class="animate-spin h-8 w-8 text-blue-600 mx-auto mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    <p class="text-gray-500 text-sm">Menarik soalan ujian dari pelayan...</p>
+                </div>`;
+            submitBtn.classList.add('hidden-section');
 
-            const icHari1 = localStorage.getItem('kehadiran_hari1_ic');
-            const icHari2 = localStorage.getItem('kehadiran_hari2_ic');
+            try {
+                // Fetch Soalan
+                const response = await fetch(quizURLs[hariId]);
+                const data = await response.json();
+                
+                // Simpan dalam memori untuk rujukan pemarkahan nanti
+                storedQuizData[testId] = data; 
 
-            if (semakIC === icHari1 && semakIC === icHari2) {
-                resDiv.className = "mt-8 p-6 rounded-lg border bg-green-50 border-green-200 text-green-800";
-                resDiv.innerHTML = `
-                    <svg class="w-12 h-12 text-green-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <h4 class="font-bold text-lg mb-1">Tahniah! Anda Layak</h4>
-                    <p class="text-sm mb-4">Kehadiran anda untuk kedua-dua hari bengkel telah disahkan.</p>
-                    <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded shadow transition">Muat Turun E-Sijil (PDF)</button>
-                `;
-            } else if (semakIC === icHari1) {
-                resDiv.className = "mt-8 p-6 rounded-lg border bg-yellow-50 border-yellow-200 text-yellow-800";
-                resDiv.innerHTML = "Anda hanya direkodkan hadir pada <strong>Hari Pertama</strong>. Sijil hanya untuk peserta yang hadir penuh 2 hari.";
-            } else if (semakIC === icHari2) {
-                resDiv.className = "mt-8 p-6 rounded-lg border bg-yellow-50 border-yellow-200 text-yellow-800";
-                resDiv.innerHTML = "Anda hanya direkodkan hadir pada <strong>Hari Kedua</strong>. Sijil hanya untuk peserta yang hadir penuh 2 hari.";
-            } else {
-                resDiv.className = "mt-8 p-6 rounded-lg border bg-red-50 border-red-200 text-red-800";
-                resDiv.innerHTML = "Maaf, No. Kad Pengenalan tidak dijumpai dalam rekod kehadiran bengkel.";
+                // Generate HTML Soalan
+                let html = '';
+                data.forEach((q) => {
+                    html += `
+                    <div class="bg-gray-50 p-4 sm:p-5 rounded-lg border border-gray-200">
+                        <label class="block font-semibold text-gray-800 mb-3 text-sm">${q.no}. ${q.soalan}</label>
+                        <div class="space-y-2">
+                            <label class="flex items-start p-2 rounded hover:bg-gray-100 cursor-pointer transition text-sm text-gray-700">
+                                <input type="radio" name="q_${q.no}" value="A" class="mt-1 mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required>
+                                <span><strong class="text-gray-500 mr-1">A.</strong> ${q.pilihan_a}</span>
+                            </label>
+                            <label class="flex items-start p-2 rounded hover:bg-gray-100 cursor-pointer transition text-sm text-gray-700">
+                                <input type="radio" name="q_${q.no}" value="B" class="mt-1 mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required>
+                                <span><strong class="text-gray-500 mr-1">B.</strong> ${q.pilihan_b}</span>
+                            </label>
+                            <label class="flex items-start p-2 rounded hover:bg-gray-100 cursor-pointer transition text-sm text-gray-700">
+                                <input type="radio" name="q_${q.no}" value="C" class="mt-1 mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required>
+                                <span><strong class="text-gray-500 mr-1">C.</strong> ${q.pilihan_c}</span>
+                            </label>
+                            <label class="flex items-start p-2 rounded hover:bg-gray-100 cursor-pointer transition text-sm text-gray-700">
+                                <input type="radio" name="q_${q.no}" value="D" class="mt-1 mr-3 w-4 h-4 text-blue-600 focus:ring-blue-500" required>
+                                <span><strong class="text-gray-500 mr-1">D.</strong> ${q.pilihan_d}</span>
+                            </label>
+                        </div>
+                    </div>`;
+                });
+                
+                container.innerHTML = html;
+                submitBtn.classList.remove('hidden-section');
+            } catch(e) {
+                console.error("Fetch error: ", e);
+                container.innerHTML = '<div class="text-red-600 bg-red-50 p-4 rounded-lg text-center text-sm font-medium border border-red-200">Gagal memuat turun soalan. Sila semak sambungan internet anda dan cuba lagi.</div>';
             }
         }
 
@@ -1012,66 +950,61 @@
             const form = e.target;
             const formData = new FormData(form);
             
-            let totalQuestions = 0;
-            let correctAnswers = 0;
-            let nama = '';
-            let ic = '';
+            const dataQuestions = storedQuizData[testId];
+            if (!dataQuestions) return alert("Ralat pada data soalan.");
 
-            // Simple Logic to calculate marks based on input value="correct"
-            for (let [name, value] of formData.entries()) {
-                if (name === 'test_nama') {
-                    nama = value;
-                } else if (name === 'test_ic') {
-                    ic = value;
-                } else {
-                    totalQuestions++;
-                    if (value === 'correct') {
-                        correctAnswers++;
-                    }
+            let correctAnswers = 0;
+            let totalQuestions = dataQuestions.length;
+            let nama = formData.get('test_nama');
+            let ic = formData.get('test_ic');
+
+            // Pengiraan Markah Berdasarkan JSON Data
+            dataQuestions.forEach(q => {
+                let userAnswer = formData.get('q_' + q.no);
+                if (userAnswer === q.jawapan) {
+                    correctAnswers++;
                 }
-            }
+            });
             
             let percentage = Math.round((correctAnswers / totalQuestions) * 100);
 
             if (testId === 'pre1' || testId === 'pre2') {
-                // Save Pre-Test score silently tagged with IC
+                // Simpan skor Pre-Test (Sembunyi dari user)
                 localStorage.setItem(testId + '_' + ic + '_score', percentage);
-                showModal('Berjaya!', 'Jawapan Pre-Test bagi <strong>' + nama + '</strong> telah direkodkan. Terima kasih.');
+                showModal('Berjaya Dihantar', 'Jawapan Pre-Test bagi <strong>' + nama + '</strong> telah direkodkan. Sila ikuti sesi bengkel dengan teliti.');
                 
-                // Hide form, show intro again
+                // Reset UI
                 const sectionNum = testId.replace('pre', '');
                 document.getElementById('preTestForm' + sectionNum).classList.add('hidden-section');
                 document.getElementById('pretest-intro' + sectionNum).classList.remove('hidden-section');
                 
             } else if (testId === 'post1' || testId === 'post2') {
-                // Determine which pretest to compare with based on specific IC
+                // Panggil Skor Pre-Test untuk Perbandingan
                 let preTestId = testId.replace('post', 'pre');
                 let preScore = localStorage.getItem(preTestId + '_' + ic + '_score');
                 
-                let resultMsg = `<div class="mb-4">Nama: <strong class="text-blue-700">${nama}</strong><br>No. Kad Pengenalan: <strong>${ic}</strong><hr class="my-3"><span class="text-gray-600">Markah Post-Test anda:</span><br><span class="text-3xl font-bold text-gray-800">${percentage}%</span></div>`;
+                let resultMsg = `<div class="mb-4 text-left p-3 bg-gray-50 rounded-lg text-sm"><span class="block text-gray-500 text-xs uppercase mb-1">Peserta</span><strong class="text-blue-800 text-base">${nama}</strong><br><span class="text-gray-600">${ic}</span></div><hr class="my-4"><span class="text-gray-600 block text-sm mb-1">Markah Post-Test Anda:</span><span class="text-4xl font-bold text-gray-900 block mb-4">${percentage}%</span>`;
                 
                 if (preScore !== null) {
                     let preScoreInt = parseInt(preScore);
                     let diff = percentage - preScoreInt;
                     
-                    resultMsg += `<div class="p-4 rounded-lg bg-gray-50 border border-gray-200">`;
+                    resultMsg += `<div class="p-4 rounded-lg text-left text-sm `;
                     if (diff > 0) {
-                        resultMsg += `<span class="text-green-600 font-bold block mb-1">Tahniah! Terdapat peningkatan prestasi.</span>`;
-                        resultMsg += `<span class="text-sm text-gray-600">Markah anda meningkat sebanyak <strong>${diff}%</strong> berbanding Pre-Test (${preScoreInt}%).</span>`;
+                        resultMsg += `bg-green-50 border border-green-200"><span class="text-green-700 font-bold block mb-1">Peningkatan Prestasi! 📈</span><span class="text-green-600">Markah anda meningkat sebanyak <strong>${diff}%</strong> berbanding Pre-Test (${preScoreInt}%).</span>`;
                     } else if (diff === 0) {
-                        resultMsg += `<span class="text-blue-600 font-bold block mb-1">Prestasi anda kekal konsisten.</span>`;
-                        resultMsg += `<span class="text-sm text-gray-600">Markah Post-Test adalah sama dengan Pre-Test (${preScoreInt}%).</span>`;
+                        resultMsg += `bg-blue-50 border border-blue-200"><span class="text-blue-700 font-bold block mb-1">Konsisten ⚖️</span><span class="text-blue-600">Markah anda adalah sama dengan Pre-Test (${preScoreInt}%).</span>`;
                     } else {
-                        resultMsg += `<span class="text-red-600 font-bold block mb-1">Terdapat penurunan markah.</span>`;
-                        resultMsg += `<span class="text-sm text-gray-600">Markah anda menurun sebanyak <strong>${Math.abs(diff)}%</strong> berbanding Pre-Test (${preScoreInt}%).</span>`;
+                        resultMsg += `bg-red-50 border border-red-200"><span class="text-red-700 font-bold block mb-1">Perlu Perhatian 📉</span><span class="text-red-600">Markah anda menurun sebanyak <strong>${Math.abs(diff)}%</strong> berbanding Pre-Test (${preScoreInt}%).</span>`;
                     }
                     resultMsg += `</div>`;
                 } else {
-                    resultMsg += `<div class="p-3 bg-yellow-50 text-yellow-800 text-sm rounded border border-yellow-200">Rekod Pre-Test untuk IC <strong>${ic}</strong> tidak dijumpai dalam peranti ini. Sila pastikan IC yang dimasukkan adalah sama seperti semasa Pre-Test.</div>`;
+                    resultMsg += `<div class="p-3 bg-yellow-50 text-yellow-800 text-xs text-left rounded border border-yellow-200">Rekod Pre-Test untuk IC <strong>${ic}</strong> tidak dijumpai dalam peranti ini untuk dibuat perbandingan.</div>`;
                 }
 
-                showModal('Keputusan Post-Test', resultMsg);
+                showModal('Keputusan Ujian', resultMsg);
                 
+                // Reset UI
                 const sectionNum = testId.replace('post', '');
                 document.getElementById('postTestForm' + sectionNum).classList.add('hidden-section');
                 document.getElementById('posttest-intro' + sectionNum).classList.remove('hidden-section');
@@ -1080,9 +1013,41 @@
             form.reset();
         }
 
+        // --- SEMAKAN SIJIL ---
+        function semakSijil() {
+            const semakIC = document.getElementById('semak-ic').value;
+            const resDiv = document.getElementById('keputusan-sijil');
+            resDiv.classList.remove('hidden-section');
+
+            if(semakIC.length < 12) {
+                resDiv.className = "mt-6 p-4 rounded-lg border bg-red-50 border-red-200 text-red-700 text-sm";
+                resDiv.innerHTML = "Sila masukkan No. Kad Pengenalan 12 digit yang sah.";
+                return;
+            }
+
+            const icHari1 = localStorage.getItem('kehadiran_hari1_ic');
+            const icHari2 = localStorage.getItem('kehadiran_hari2_ic');
+
+            if (semakIC === icHari1 && semakIC === icHari2) {
+                resDiv.className = "mt-6 p-4 rounded-lg border bg-green-50 border-green-200 text-green-800 text-sm";
+                resDiv.innerHTML = `
+                    <svg class="w-10 h-10 text-green-600 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h4 class="font-bold text-base mb-1">Tahniah! Anda Layak</h4>
+                    <p class="text-xs mb-4">Kehadiran 2 hari bengkel telah disahkan.</p>
+                    <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow transition text-xs font-semibold w-full">Muat Turun E-Sijil</button>
+                `;
+            } else if (semakIC === icHari1 || semakIC === icHari2) {
+                resDiv.className = "mt-6 p-4 rounded-lg border bg-yellow-50 border-yellow-200 text-yellow-800 text-sm text-left";
+                resDiv.innerHTML = "Rekod tidak lengkap. Anda hanya direkodkan hadir untuk SATU hari sahaja. E-Sijil memerlukan kehadiran penuh 2 hari.";
+            } else {
+                resDiv.className = "mt-6 p-4 rounded-lg border bg-red-50 border-red-200 text-red-800 text-sm";
+                resDiv.innerHTML = "No. Kad Pengenalan tidak dijumpai dalam rekod pendaftaran peranti ini.";
+            }
+        }
+
         function showModal(title, msg) {
             document.getElementById('modal-title').textContent = title;
-            document.getElementById('modal-msg').innerHTML = msg; // Update to innerHTML to allow HTML formatting like bold and colors
+            document.getElementById('modal-msg').innerHTML = msg; 
             document.getElementById('modal').style.display = 'flex';
             document.getElementById('modal').classList.remove('hidden-section');
         }
@@ -1094,7 +1059,7 @@
 
         window.onload = function() {
             checkTimeLogic();
-            setInterval(checkTimeLogic, 60000); 
+            setInterval(checkTimeLogic, 60000); // Check masa setiap 1 minit
         };
     </script>
 </body>
