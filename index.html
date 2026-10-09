@@ -601,6 +601,18 @@
     </div> 
 
     <!-- Modal Pop-Up (Sijil/Makluman) -->
+    <div id="dev-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center hidden-section backdrop-blur-sm" style="display: none;">
+        <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 max-w-sm w-full mx-4 fade-in border border-gray-100">
+            <h3 class="text-lg font-bold text-gray-900 mb-2 border-b pb-2">Dev Mode</h3>
+            <p class="text-sm text-gray-600 mb-4">Sila masukkan kata laluan untuk membuka semua sekatan masa borang.</p>
+            <input type="password" id="dev-password" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-gray-400 outline-none mb-6" placeholder="Kata laluan">
+            <div class="flex gap-3">
+                <button type="button" onclick="closeDevModal()" class="w-1/2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2.5 px-4 rounded-lg transition">Batal</button>
+                <button type="button" onclick="verifyDevMode()" class="w-1/2 bg-gray-800 hover:bg-gray-900 text-white font-medium py-2.5 px-4 rounded-lg transition shadow">Sahkan</button>
+            </div>
+        </div>
+    </div>
+
     <div id="modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center hidden-section backdrop-blur-sm" style="display: none;">
         <div class="bg-white rounded-xl shadow-2xl p-6 sm:p-8 max-w-sm w-full mx-4 fade-in text-center border border-gray-100">
             <h3 id="modal-title" class="text-lg font-bold text-gray-900 mb-2 border-b pb-2">Status</h3>
@@ -734,13 +746,26 @@
         let isDevMode = false;
 
         function activateDevMode() {
-            let password = prompt("Sila masukkan kata laluan untuk Dev Mode:");
+            document.getElementById('dev-password').value = '';
+            document.getElementById('dev-modal').style.display = 'flex';
+            document.getElementById('dev-modal').classList.remove('hidden-section');
+        }
+
+        function closeDevModal() {
+            document.getElementById('dev-modal').style.display = 'none';
+            document.getElementById('dev-modal').classList.add('hidden-section');
+        }
+
+        function verifyDevMode() {
+            let password = document.getElementById('dev-password').value;
             if (password === "cdcpkkbn.2025") {
                 isDevMode = true;
-                alert("Dev Mode Diaktifkan! Semua sekatan masa telah dibuka.");
+                closeDevModal();
+                showModal('Berjaya', "Dev Mode Diaktifkan! Semua sekatan masa telah dibuka.");
                 checkTimeLogic();
-            } else if (password !== null) {
-                alert("Kata laluan salah! Akses ditolak.");
+            } else {
+                closeDevModal();
+                showModal('Ralat', "Kata laluan salah! Akses ditolak.");
             }
         }
 
@@ -858,7 +883,8 @@
             let jawatanVal = document.getElementById('jawatan' + day).value;
             if (jawatanVal === 'Lain-lain') jawatanVal = document.getElementById('lain' + day).value;
 
-            const formData = new FormData();
+            // Format URLSearchParams sangat stabil untuk elak ralat pada Google Apps Script
+            const formData = new URLSearchParams();
             formData.append('hari', 'Hari ' + day);
             formData.append('nama', document.getElementById('nama' + day).value);
             formData.append('ic', icVal);
