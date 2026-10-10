@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bengkel Pengurusan Rabies & Survelan 2026</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            -webkit-font-smoothing: antialiased; 
+            background: #0f172a; /* Latar belakang gelap moden */
+            color: #f8fafc;
+        }
+        
+        /* Corak Latar Belakang Canggih */
+        .bg-pattern {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.15), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(99, 102, 241, 0.15), transparent 25%);
+            z-index: -1;
+        }
+
+        .glass-panel { 
+            background: rgba(30, 41, 59, 0.7); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-input {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            background: rgba(15, 23, 42, 0.9);
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+            outline: none;
+        }
+
+        /* Khusus untuk dropdown select supaya tulisannya kelihatan kemas */
+        select option {
+            background-color: #1e293b;
+            color: white;
+        }
+
+        .btn-primary { 
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%); 
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.8);
+        }
+
+        .btn-danger { background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); }
+        .btn-success { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
+
+        /* Animasi Transisi Halus */
+        .fade-enter { opacity: 0; transform: translateY(15px); }
+        .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 400ms, transform 400ms; }
+        .fade-exit { opacity: 1; transform: translateY(0); }
+        .fade-exit-active { opacity: 0; transform: translateY(-15px); transition: opacity 300ms, transform 300ms; }
+
+        /* Sembunyikan scrollbar tapi kekalkan fungsi scroll */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Latar Belakang Dinamik -->
+    <div class="bg-pattern"></div>
+
+    <div id="custom-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl w-[90%] max-w-md relative z-10 transform scale-95 transition-transform duration-300" id="modal-content-box">
+            <h3 id="modal-title" class="text-xl font-bold text-white mb-2">Tajuk Modal</h3>
+            <p id="modal-message" class="text-slate-300 text-sm mb-6 leading-relaxed">Mesej Modal</p>
+            
+            <input type="password" id="modal-input" class="hidden w-full glass-input p-3 rounded-xl mb-6 text-sm" placeholder="Masukkan kata laluan...">
+            
+            <div class="flex justify-end space-x-3">
+                <button id="modal-btn-cancel" onclick="closeModal()" class="hidden px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-300 bg-slate-800/50 hover:bg-slate-700/50 transition">Batal</button>
+                <button id="modal-btn-confirm" class="btn-primary px-6 py-2.5 rounded-xl text-sm font-semibold text-white">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="greeting-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center p-6 transition-all duration-700 bg-[#0f172a]">
+        <div class="w-full max-w-lg mx-auto text-center">
+            <div class="mb-8 relative inline-block">
+                <div class="w-24 h-24 bg-blue-500/20 rounded-full blur-2xl absolute inset-0 m-auto animate-pulse"></div>
+                <img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png" alt="Logo Kesihatan" class="w-20 h-20 relative z-10 mx-auto filter drop-shadow-lg">
+            </div>
+            
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300 mb-4 leading-tight">
+                Selamat Datang
+            </h1>
+            <h2 class="text-lg sm:text-xl font-medium text-slate-300 mb-8 leading-snug">
+                Bengkel Latihan Pengurusan Rabies & Survelan Penyakit Berjangkit Tahun 2026
+            </h2>
+            
+            <button onclick="masukAplikasi()" class="btn-primary w-full sm:w-auto px-10 py-4 rounded-full font-bold text-lg tracking-wide shadow-blue-500/30 shadow-lg">
+                Masuk ke Aplikasi
+            </button>
+            <p class="mt-8 text-xs text-slate-500">Pejabat Kesihatan Kawasan Kinabatangan</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app-container" class="flex-grow container mx-auto px-4 py-6 max-w-4xl hidden opacity-0 transition-opacity duration-700 mt-2">
+        
+        <div id="top-nav" class="flex justify-between items-center mb-6 glass-panel p-2 sm:p-3 rounded-2xl sticky top-4 z-40">
+            <!-- Kiri: Kembali & Menu Utama -->
+            <div class="flex-1 flex items-center space-x-1 sm:space-x-2">
+                <button id="btn-kembali" onclick="navBack()" class="p-2 sm:px-3 sm:py-2 rounded-xl bg-slate-800/50 hover:bg-slate-700 text-slate-300 transition flex items-center group">
+                    <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                    <span class="hidden sm:inline ml-1 text-sm font-semibold">Kembali</span>
+                </button>
+            </div>
+            
+            <!-- Tengah: Tajuk -->
+            <div class="flex-1 text-center">
+                <h2 id="page-title" class="font-bold text-white text-sm sm:text-base tracking-wide uppercase">Menu Utama</h2>
+            </div>
+            
+            <!-- Kanan: D-MODE -->
+            <div class="flex-1 flex justify-end">
+                <button id="btn-dmode" onclick="mintaPasswordDev()" class="px-3 py-2 border border-dashed border-slate-600 hover:border-blue-400 text-slate-400 hover:text-blue-400 text-xs font-bold rounded-xl transition tracking-widest">
+                    D-MODE
+                </button>
+            </div>
+        </div>
+
+        <div id="main-menu" class="view-section">
+            
+            <!-- Banner Rasmi -->
+            <div class="w-full rounded-3xl overflow-hidden shadow-lg mb-8 relative border border-slate-700/50 bg-slate-800">
+                <img src="https://drive.google.com/thumbnail?id=1hRlALBGaoC0Fh5dNrCorFqVOi5U8kz_c&sz=w1200" 
+                     alt="Banner Bengkel" class="w-full h-auto object-contain object-center relative z-10" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80 z-20 pointer-events-none"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                <!-- KAD KEHADIRAN -->
+                <div onclick="navigasiKe('tab-kehadiran')" class="glass-panel p-6 rounded-3xl cursor-pointer group hover:border-blue-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="p-4 bg-blue-500/20 text-blue-400 rounded-2xl group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-bold text-white">Kehadiran</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 font-medium">Pendaftaran & Semakan E-Sijil</p>
+                </div>
+
+                <!-- KAD UJIAN -->
+                <div onclick="navigasiKe('tab-ujian')" class="glass-panel p-6 rounded-3xl cursor-pointer group hover:border-red-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="p-4 bg-red-500/20 text-red-400 rounded-2xl group-hover:bg-red-500 group-hover:text-white transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-bold text-white">Ujian Modul</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 font-medium">Pre-Test & Post-Test Modul</p>
+                </div>
+
+                <!-- KAD SLAID -->
+                <div onclick="navigasiKe('tab-slaid')" class="glass-panel p-6 rounded-3xl cursor-pointer group hover:border-emerald-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="p-4 bg-emerald-500/20 text-emerald-400 rounded-2xl group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-bold text-white">Slaid & Nota</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 font-medium">Rujukan pembentangan penceramah</p>
+                </div>
+
+                <!-- KAD GAMBAR -->
+                <div onclick="navigasiKe('tab-gambar')" class="glass-panel p-6 rounded-3xl cursor-pointer group hover:border-purple-500/50 transition-all duration-300">
+                    <div class="flex items-center mb-4">
+                        <div class="p-4 bg-purple-500/20 text-purple-400 rounded-2xl group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="ml-4 text-xl font-bold text-white">Galeri</h3>
+                    </div>
+                    <p class="text-sm text-slate-400 font-medium">Gambar kenangan & aktiviti bengkel</p>
+                </div>
+            </div>
+
+            <!-- Tentatif Program (Imej) -->
+            <div class="mt-8 glass-panel p-6 sm:p-8 rounded-3xl">
+                <h3 class="text-xl font-bold text-white mb-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Tentatif Program
+                    </div>
+                    <!-- Butang Zoom -->
+                    <div class="flex space-x-2">
+                        <button onclick="zoomTentatif('out')" class="p-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-300 transition shadow" title="Zoom Keluar">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path></svg>
+                        </button>
+                        <button onclick="zoomTentatif('in')" class="p-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-white transition shadow" title="Zoom Masuk">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path></svg>
+                        </button>
+                    </div>
+                </h3>
+                <!-- Sekatan max-h-[60vh] telah dibuang di sini -->
+                <div class="w-full rounded-2xl overflow-auto shadow-inner bg-slate-900 border border-slate-700">
+                    <img id="tentatif-img" src="https://drive.google.com/thumbnail?id=1CXYtGASDXFGHyTYQSeCwG3Gnfy_sz9nZ&sz=w1200" alt="Tentatif Program" class="w-full h-auto transition-all duration-300 origin-top-left" style="min-width: 100%;">
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-kehadiran" class="hidden view-section">
+            <div class="glass-panel p-6 sm:p-8 rounded-3xl relative overflow-hidden">
+                <!-- Hiasan latar -->
+                <div class="absolute top-0 right-0 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl -mt-10 -mr-10"></div>
+                
+                <div id="pilihan-kehadiran" class="relative z-10">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">Pendaftaran Kehadiran</h2>
+                    <p class="text-sm text-blue-300 font-medium mb-8">Pautan kehadiran dibuka pada jam 4:00 PM hingga 6:00 PM sahaja.</p>
+                    
+                    <div class="space-y-4">
+                        <!-- Hari 1 -->
+                        <div class="p-5 rounded-2xl flex flex-col sm:flex-row sm:justify-between sm:items-center bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 transition">
+                            <div class="mb-4 sm:mb-0">
+                                <h4 class="font-bold text-lg text-white">Hari Pertama Bengkel</h4>
+                                <p class="text-sm text-slate-400">Pengurusan Rabies</p>
+                            </div>
+                            <div id="hari1-hadir-status">
+                                <span class="px-4 py-1.5 bg-red-500/20 text-red-400 rounded-full text-xs font-bold border border-red-500/30 shadow-sm">DITUTUP</span>
+                            </div>
+                            <button id="hari1-hadir-btn" onclick="navigasiKe('borang-kehadiran-hari1')" class="hidden btn-primary text-white font-bold py-2.5 px-6 rounded-xl shadow-lg w-full sm:w-auto">
+                                ISI SEKARANG
+                            </button>
+                        </div>
+
+                        <!-- Hari 2 -->
+                        <div class="p-5 rounded-2xl flex flex-col sm:flex-row sm:justify-between sm:items-center bg-slate-800/50 border border-slate-700/50 hover:bg-slate-700/50 transition">
+                            <div class="mb-4 sm:mb-0">
+                                <h4 class="font-bold text-lg text-white">Hari Kedua Bengkel</h4>
+                                <p class="text-sm text-slate-400">Survelan Penyakit Berjangkit</p>
+                            </div>
+                            <div id="hari2-hadir-status">
+                                <span class="px-4 py-1.5 bg-red-500/20 text-red-400 rounded-full text-xs font-bold border border-red-500/30 shadow-sm">DITUTUP</span>
+                            </div>
+                            <button id="hari2-hadir-btn" onclick="navigasiKe('borang-kehadiran-hari2')" class="hidden btn-primary text-white font-bold py-2.5 px-6 rounded-xl shadow-lg w-full sm:w-auto">
+                                ISI SEKARANG
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Seksyen Semakan Sijil Moden -->
+                    <div class="mt-12 pt-8 border-t border-slate-700/50">
+                        <div class="flex items-center mb-4">
+                            <div class="p-2 bg-indigo-500/20 rounded-lg mr-3 text-indigo-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Semakan & E-Sijil</h3>
+                        </div>
+                        
+                        <!-- Syarat Kelayakan Sijil -->
+                        <div class="bg-slate-800/80 p-5 rounded-2xl mb-6 border border-slate-700">
+                            <p class="text-sm text-slate-300 font-semibold mb-3">Syarat Kelayakan E-Sijil (Wajib Penuh):</p>
+                            <ul class="space-y-2 text-sm text-slate-400">
+                                <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Menghadiri Hari Pertama Bengkel</b></li>
+                                <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Menghadiri Hari Kedua Bengkel</b></li>
+                                <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Lulus Post-Test Pengurusan Rabies (Minimum 80%)</b></li>
+                                <li class="flex items-center"><svg class="w-4 h-4 mr-2 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> Lulus Post-Test Pengukuhan Survelan Penyakit Berjangkit (Minimum 80%)</b></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-3 relative z-20">
+                            <input type="text" id="ic-sijil" inputmode="numeric" placeholder="No. Kad Pengenalan" class="flex-grow glass-input p-4 rounded-xl text-base font-medium tracking-wide" maxlength="12">
+                            <button onclick="semakSijil()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-colors whitespace-nowrap">
+                                Semak Kelayakan
+                            </button>
+                        </div>
+                        
+                        <!-- Keputusan Semakan -->
+                        <div id="sijil-result" class="mt-4 hidden p-5 rounded-2xl text-sm transition-all duration-500"></div>
+                        
+                        <!-- Butang Muat Turun (Muncul Jika Lulus) -->
+                        <button id="btn-muat-turun-sijil" onclick="janaSijil()" class="hidden mt-4 w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition transform hover:-translate-y-1 flex items-center justify-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Muat Turun E-Sijil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BORANG HARI 1 -->
+                <form id="borang-kehadiran-hari1" class="hidden space-y-5" onsubmit="submitAttendance(event, 'Hari 1')">
+                    <h3 class="text-2xl font-bold text-blue-400 mb-6">Kehadiran Hari Pertama Bengkel</h3>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">No. Kad Pengenalan</label>
+                    <input type="text" name="ic" id="ic_h1" required maxlength="12" pattern="[0-9]{12}" inputmode="numeric" class="glass-input block w-full p-3.5 rounded-xl text-base" onblur="autoIsiNama('ic_h1', 'nama_h1')" placeholder="Tanpa sengkang (-)"></div>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Nama Penuh (Huruf Besar)</label>
+                    <input type="text" name="nama" id="nama_h1" required class="glass-input block w-full p-3.5 rounded-xl text-base uppercase"></div>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Jawatan</label>
+                    <select name="jawatan_select" id="jawatan_h1" onchange="toggleLain('h1')" required class="glass-input block w-full p-3.5 rounded-xl text-base appearance-none cursor-pointer">
+                        <option value="" disabled selected>Pilih Jawatan...</option>
+                        <option value="Pegawai Perubatan">Pegawai Perubatan</option>
+                        <option value="Penolong Pegawai Perubatan">Penolong Pegawai Perubatan</option>
+                        <option value="Penyelia Jururawat Kesihatan">Penyelia Jururawat Kesihatan</option>
+                        <option value="Ketua Jururawat Kesihatan">Ketua Jururawat Kesihatan</option>
+                        <option value="Jururawat Bidan Terlatih">Jururawat Bidan Terlatih</option>
+                        <option value="Jururawat Terlatih">Jururawat Terlatih</option>
+                        <option value="Lain-lain">Lain-lain – sila nyatakan</option>
+                    </select>
+                    <!-- Input tersembunyi untuk Lain-lain -->
+                    <input type="text" id="jawatan_lain_h1" class="hidden glass-input w-full p-3.5 rounded-xl mt-3 text-base uppercase border-blue-400/50" placeholder="Nyatakan jawatan anda...">
+                    <!-- Field sebenar yg dihantar -->
+                    <input type="hidden" name="jawatan" id="jawatan_final_h1">
+                    </div>
+
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Gred Jawatan</label>
+                    <input type="text" name="gred" id="gred_h1" required class="glass-input block w-full p-3.5 rounded-xl text-base uppercase" placeholder="Cth: UD10 / U6"></div>
+
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Tempat Bertugas (Klinik)</label>
+                    <select name="tempat" id="tempat_h1" required class="glass-input block w-full p-3.5 rounded-xl text-base appearance-none cursor-pointer">
+                        <option value="" disabled selected>Pilih Klinik...</option>
+                        <option value="Klinik Kesihatan Batu Puteh">Klinik Kesihatan Batu Puteh</option>
+                        <option value="Klinik Kesihatan Bukit Garam">Klinik Kesihatan Bukit Garam</option>
+                        <option value="Klinik Kesihatan Ibu Dan Anak">Klinik Kesihatan Ibu Dan Anak</option>
+                        <option value="Klinik Kesihatan Kuamut">Klinik Kesihatan Kuamut</option>
+                        <option value="Klinik Kesihatan Suan Lamba">Klinik Kesihatan Suan Lamba</option>
+                        <option value="Klinik Kesihatan Sukau">Klinik Kesihatan Sukau</option>
+                        <option value="Klinik Kesihatan Entilibon">Klinik Kesihatan Entilibon</option>
+                        <option value="Klinik Kesihatan Karamuak">Klinik Kesihatan Karamuak</option>
+                        <option value="Klinik Kesihatan Mengkawagu">Klinik Kesihatan Mengkawagu</option>
+                        <option value="Klinik Kesihatan Minusoh">Klinik Kesihatan Minusoh</option>
+                        <option value="Klinik Kesihatan Penangah">Klinik Kesihatan Penangah</option>
+                        <option value="Klinik Kesihatan Tongod">Klinik Kesihatan Tongod</option>
+                        <option value="Hospital Kinabatangan">Hospital Kinabatangan</option>
+                    </select></div>
+                    
+                    <button type="submit" class="w-full btn-primary font-bold py-4 rounded-xl mt-8 text-lg shadow-lg">Hantar Kehadiran Hari Pertama Bengkel</button>
+                </form>
+
+                <!-- BORANG HARI 2 -->
+                <form id="borang-kehadiran-hari2" class="hidden space-y-5" onsubmit="submitAttendance(event, 'Hari 2')">
+                    <h3 class="text-2xl font-bold text-blue-400 mb-6">Kehadiran Hari Kedua Bengkel</h3>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">No. Kad Pengenalan</label>
+                    <input type="text" name="ic" id="ic_h2" required maxlength="12" pattern="[0-9]{12}" inputmode="numeric" class="glass-input block w-full p-3.5 rounded-xl text-base" onblur="autoIsiNama('ic_h2', 'nama_h2')" placeholder="Tanpa sengkang (-)"></div>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Nama Penuh (Huruf Besar)</label>
+                    <input type="text" name="nama" id="nama_h2" required class="glass-input block w-full p-3.5 rounded-xl text-base uppercase"></div>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Jawatan</label>
+                    <select name="jawatan_select" id="jawatan_h2" onchange="toggleLain('h2')" required class="glass-input block w-full p-3.5 rounded-xl text-base appearance-none cursor-pointer">
+                        <option value="" disabled selected>Pilih Jawatan...</option>
+                        <option value="Pegawai Perubatan">Pegawai Perubatan</option>
+                        <option value="Penolong Pegawai Perubatan">Penolong Pegawai Perubatan</option>
+                        <option value="Penyelia Jururawat Kesihatan">Penyelia Jururawat Kesihatan</option>
+                        <option value="Ketua Jururawat Kesihatan">Ketua Jururawat Kesihatan</option>
+                        <option value="Jururawat Bidan Terlatih">Jururawat Bidan Terlatih</option>
+                        <option value="Jururawat Terlatih">Jururawat Terlatih</option>
+                        <option value="Lain-lain">Lain-lain – sila nyatakan</option>
+                    </select>
+                    <!-- Input tersembunyi untuk Lain-lain -->
+                    <input type="text" id="jawatan_lain_h2" class="hidden glass-input w-full p-3.5 rounded-xl mt-3 text-base uppercase border-blue-400/50" placeholder="Nyatakan jawatan anda...">
+                    <!-- Field sebenar yg dihantar -->
+                    <input type="hidden" name="jawatan" id="jawatan_final_h2">
+                    </div>
+
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Gred Jawatan</label>
+                    <input type="text" name="gred" id="gred_h2" required class="glass-input block w-full p-3.5 rounded-xl text-base uppercase" placeholder="Cth: UD10 / U6"></div>
+
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Tempat Bertugas (Klinik)</label>
+                    <select name="tempat" id="tempat_h2" required class="glass-input block w-full p-3.5 rounded-xl text-base appearance-none cursor-pointer">
+                        <option value="" disabled selected>Pilih Klinik...</option>
+                        <option value="Klinik Kesihatan Batu Puteh">Klinik Kesihatan Batu Puteh</option>
+                        <option value="Klinik Kesihatan Bukit Garam">Klinik Kesihatan Bukit Garam</option>
+                        <option value="Klinik Kesihatan Ibu Dan Anak">Klinik Kesihatan Ibu Dan Anak</option>
+                        <option value="Klinik Kesihatan Kuamut">Klinik Kesihatan Kuamut</option>
+                        <option value="Klinik Kesihatan Suan Lamba">Klinik Kesihatan Suan Lamba</option>
+                        <option value="Klinik Kesihatan Sukau">Klinik Kesihatan Sukau</option>
+                        <option value="Klinik Kesihatan Entilibon">Klinik Kesihatan Entilibon</option>
+                        <option value="Klinik Kesihatan Karamuak">Klinik Kesihatan Karamuak</option>
+                        <option value="Klinik Kesihatan Mengkawagu">Klinik Kesihatan Mengkawagu</option>
+                        <option value="Klinik Kesihatan Minusoh">Klinik Kesihatan Minusoh</option>
+                        <option value="Klinik Kesihatan Penangah">Klinik Kesihatan Penangah</option>
+                        <option value="Klinik Kesihatan Tongod">Klinik Kesihatan Tongod</option>
+                        <option value="Hospital Kinabatangan">Hospital Kinabatangan</option>
+                    </select></div>
+                    
+                    <button type="submit" class="w-full btn-primary font-bold py-4 rounded-xl mt-8 text-lg shadow-lg">Hantar Kehadiran Hari Kedua Bengkel</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div id="tab-ujian" class="hidden view-section">
+            
+            <div id="pilihan-ujian" class="glass-panel p-6 sm:p-8 rounded-3xl">
+                <h2 class="text-2xl font-extrabold text-white mb-6 border-b border-slate-700 pb-4">Modul Ujian</h2>
+                
+                <div class="space-y-6">
+                    <!-- Hari 1 -->
+                    <div class="bg-slate-800/60 rounded-2xl p-5 border border-slate-700/50 hover:bg-slate-800/80 transition">
+                        <h4 class="font-bold text-white mb-4 text-lg">Hari Pertama Bengkel: Latihan Pengurusan Rabies</h4>
+                        <div class="flex gap-3">
+                            <div id="hari1-pre-status" class="flex-1 flex justify-center items-center bg-slate-900/50 rounded-xl py-2"><span class="text-xs font-bold text-slate-500">DITUTUP</span></div>
+                            <div id="hari1-post-status" class="flex-1 flex justify-center items-center bg-slate-900/50 rounded-xl py-2"><span class="text-xs font-bold text-slate-500">DITUTUP</span></div>
+                            
+                            <button id="hari1-pre-btn" onclick="navigasiKe('ujian-pre1')" class="hidden flex-1 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-bold py-2.5 rounded-xl text-sm transition">Pre-Test</button>
+                            <button id="hari1-post-btn" onclick="navigasiKe('ujian-post1')" class="hidden flex-1 btn-primary text-white font-bold py-2.5 rounded-xl text-sm transition shadow-lg shadow-blue-500/20">Post-Test</button>
+                        </div>
+                    </div>
+                    <!-- Hari 2 -->
+                    <div class="bg-slate-800/60 rounded-2xl p-5 border border-slate-700/50 hover:bg-slate-800/80 transition">
+                        <h4 class="font-bold text-white mb-4 text-lg">Hari Kedua Bengkel: Pengukuhan Survelan Penyakit Berjangkit</h4>
+                        <div class="flex gap-3">
+                            <div id="hari2-pre-status" class="flex-1 flex justify-center items-center bg-slate-900/50 rounded-xl py-2"><span class="text-xs font-bold text-slate-500">DITUTUP</span></div>
+                            <div id="hari2-post-status" class="flex-1 flex justify-center items-center bg-slate-900/50 rounded-xl py-2"><span class="text-xs font-bold text-slate-500">DITUTUP</span></div>
+                            
+                            <button id="hari2-pre-btn" onclick="navigasiKe('ujian-pre2')" class="hidden flex-1 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white font-bold py-2.5 rounded-xl text-sm transition">Pre-Test</button>
+                            <button id="hari2-post-btn" onclick="navigasiKe('ujian-post2')" class="hidden flex-1 btn-primary text-white font-bold py-2.5 rounded-xl text-sm transition shadow-lg shadow-blue-500/20">Post-Test</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ruangan Menjawab Ujian -->
+            <div id="ruangan-menjawab" class="hidden glass-panel p-6 sm:p-8 rounded-3xl mt-4">
+                <h3 id="tajuk-ujian-semasa" class="text-xl font-bold text-blue-400 mb-6 border-b border-slate-700 pb-4">Tajuk Ujian</h3>
+                
+                <!-- Pengesahan Identiti / Kunci Ujian -->
+                <div id="auth-ujian" class="space-y-5 bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50">
+                    <div class="flex items-start text-sm text-blue-200 bg-blue-900/20 p-4 rounded-xl border border-blue-500/20">
+                        <svg class="w-5 h-5 mr-3 mt-0.5 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <p>Pengesahan Identiti diperlukan sebelum soalan dipaparkan secara selamat.</p>
+                    </div>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">No. Kad Pengenalan (IC)</label>
+                    <input type="text" id="ujian_ic" maxlength="12" inputmode="numeric" class="glass-input block w-full p-4 rounded-xl text-base" onblur="autoIsiNama('ujian_ic', 'ujian_nama')" placeholder="Tanpa -"></div>
+                    
+                    <div><label class="block text-sm font-semibold text-slate-300 mb-1">Nama Penuh</label>
+                    <input type="text" id="ujian_nama" class="glass-input block w-full p-4 rounded-xl text-base uppercase"></div>
+                    
+                    <button onclick="sahkanDanMula()" class="w-full btn-primary text-white font-bold py-4 rounded-xl shadow-lg mt-4 text-lg">Sahkan & Buka Soalan</button>
+                </div>
+
+                <!-- Borang Soalan Dinamik -->
+                <form id="borang-soalan-dinamik" class="hidden space-y-6 mt-6" onsubmit="hantarUjian(event)">
+                    <div id="loading-soalan" class="flex flex-col items-center justify-center py-10 text-blue-400">
+                        <svg class="w-10 h-10 animate-spin mb-3" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        <p class="font-medium">Memuat turun data ujian yang disulitkan...</p>
+                    </div>
+                    
+                    <div id="senarai-soalan-container" class="space-y-6"></div>
+                    
+                    <div class="pt-6 border-t border-slate-700">
+                        <button type="submit" class="w-full btn-success text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-500/20 text-lg tracking-wide flex justify-center items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            HANTAR JAWAPAN
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="tab-slaid" class="hidden view-section">
+            <div class="glass-panel p-2 sm:p-4 rounded-3xl h-[75vh] flex flex-col border border-slate-700/50">
+                <div class="px-4 pt-3 pb-2 flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-white flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                        Slaid Pembentangan
+                    </h2>
+                </div>
+                <div class="flex-grow bg-slate-50 rounded-2xl overflow-hidden relative">
+                    <!-- Gunakan pautan folder Drive (Grid Mode) -->
+                    <iframe src="https://drive.google.com/embeddedfolderview?id=18wZcTYuC0pxbdpND4hG37u2A3lC2kSsM#grid" width="100%" height="100%" frameborder="0" class="absolute inset-0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-gambar" class="hidden view-section">
+            <div class="glass-panel p-2 sm:p-4 rounded-3xl h-[75vh] flex flex-col border border-slate-700/50">
+                <div class="px-4 pt-3 pb-2 flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-white flex items-center">
+                        <svg class="w-6 h-6 mr-2 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Galeri Gambar
+                    </h2>
+                </div>
+                <div class="flex-grow bg-slate-50 rounded-2xl overflow-hidden relative">
+                    <!-- Gunakan pautan folder Drive -->
+                    <iframe src="https://drive.google.com/embeddedfolderview?id=1qmYO3K8W0O4gg996WDagN6BEUyzmqp6D#grid" width="100%" height="100%" frameborder="0" class="absolute inset-0"></iframe>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Canvas Tersembunyi untuk E-Sijil -->
+    <canvas id="canvas-sijil" class="hidden"></canvas>
+
+    <script>
+        // ================= KONFIGURASI =================
+        let isDevMode = false;
+        
+        // URL Kekal Apps Script
+        const URL_KEHADIRAN = 'https://script.google.com/macros/s/AKfycbyzn9C2znn5ncToHhRPGUteuNq7bL3X7x02lgi4XalztEt-O1J6Sit5ToD_GTYk8oed/exec';
+        const URL_MARKAH = 'https://script.google.com/macros/s/AKfycbznQzYCRzPVOpR1O075W0bIJ6RV_faznNWC3ex2xh1gKzl2GAjgrFdn3TaF0o9eMlY1/exec';
+        const URL_SOALAN_RABIES = 'https://script.google.com/macros/s/AKfycbyzTtaYJG5pvaTw--mphZ4XK8h-YH74JOJBKusXoUMuRUt1hJA1sQeN75XmBF_cuNkxfw/exec';
+        const URL_SOALAN_SURVELAN = 'https://script.google.com/macros/s/AKfycbxgh8O4ovxgHoznXc-pScWHMBsx60i9n1lFMubRFcwAIrE57GD8mb_Gn59XLHh-g2LIBQ/exec';
+        const URL_SEMAKAN_IC = 'https://script.google.com/macros/s/AKfycbx9RncO0gMuUSQcrh0zQpW2CLhtorV9Gooew1ZCJZ8_eBFydtqPUj-9lQEFwTwzjcHf/exec';
+
+        let jenisUjianSemasa = ''; 
+        let dataSoalanSemasa = [];
+        let preTestScoreCache = 0; // Menyimpan markah Pre-Test sementara untuk perbandingan
+
+        // ================= SISTEM MODAL KUSTOM (Sangat Penting) =================
+        let modalConfirmCallback = null;
+
+        function showModal(title, message, isPrompt = false, confirmCallback = null) {
+            const modal = document.getElementById('custom-modal');
+            const box = document.getElementById('modal-content-box');
+            
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerHTML = message;
+            
+            const inputField = document.getElementById('modal-input');
+            const btnCancel = document.getElementById('modal-btn-cancel');
+            
+            if(isPrompt) {
+                inputField.classList.remove('hidden');
+                inputField.value = ''; // Kosongkan
+                btnCancel.classList.remove('hidden');
+                setTimeout(() => inputField.focus(), 100);
+            } else {
+                inputField.classList.add('hidden');
+                btnCancel.classList.add('hidden');
+            }
+
+            modalConfirmCallback = confirmCallback;
+
+            modal.classList.remove('hidden');
+            // Sedikit delay untuk animasi transform
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                box.classList.remove('scale-95');
+                box.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('custom-modal');
+            const box = document.getElementById('modal-content-box');
+            
+            modal.classList.add('opacity-0');
+            box.classList.remove('scale-100');
+            box.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        document.getElementById('modal-btn-confirm').addEventListener('click', () => {
+            const inputVal = document.getElementById('modal-input').value;
+            closeModal();
+            if (modalConfirmCallback) {
+                modalConfirmCallback(inputVal);
+            }
+        });
+
+
+        // ================= NAVIGASI & ANIMASI =================
+        const screenMap = {
+            'main-menu': ['main-menu'],
+            'tab-kehadiran': ['tab-kehadiran', 'pilihan-kehadiran'],
+            'borang-kehadiran-hari1': ['tab-kehadiran', 'borang-kehadiran-hari1'],
+            'borang-kehadiran-hari2': ['tab-kehadiran', 'borang-kehadiran-hari2'],
+            'tab-ujian': ['tab-ujian', 'pilihan-ujian'],
+            'ruangan-ujian': ['tab-ujian', 'ruangan-menjawab'],
+            'tab-slaid': ['tab-slaid'],
+            'tab-gambar': ['tab-gambar']
+        };
+        const allViews = ['main-menu', 'tab-kehadiran', 'tab-ujian', 'tab-slaid', 'tab-gambar', 'pilihan-kehadiran', 'borang-kehadiran-hari1', 'borang-kehadiran-hari2', 'pilihan-ujian', 'ruangan-menjawab'];
+
+        history.replaceState({ screen: 'greeting' }, "", "#mula");
+
+        function masukAplikasi() {
+            document.getElementById('greeting-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('greeting-screen').style.display = 'none';
+                const appContainer = document.getElementById('app-container');
+                appContainer.classList.remove('hidden');
+                setTimeout(() => appContainer.classList.remove('opacity-0'), 50);
+                navigasiKe('main-menu', true);
+            }, 700);
+        }
+
+        function navigasiKe(screenId, pushHistory = true) {
+            // Sembunyikan dengan animasi (jika boleh), tapi di sini kita buat pantas untuk UX
+            allViews.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    el.classList.add('hidden');
+                    el.classList.remove('fade-enter-active'); // Reset animasi
+                }
+            });
+
+            // Logik Tajuk Atas & Butang Kembali
+            const titleEl = document.getElementById('page-title');
+            const btnKembali = document.getElementById('btn-kembali');
+            
+            if(screenId === 'main-menu') {
+                titleEl.innerText = 'Menu Utama';
+                if(btnKembali) btnKembali.classList.add('hidden');
+            } else {
+                if(btnKembali) btnKembali.classList.remove('hidden');
+                
+                if(screenId.includes('kehadiran')) titleEl.innerText = 'Kehadiran';
+                else if(screenId.includes('ujian')) titleEl.innerText = 'Ujian Modul';
+                else if(screenId.includes('slaid')) titleEl.innerText = 'Slaid';
+                else if(screenId.includes('gambar')) titleEl.innerText = 'Galeri';
+            }
+
+            // Paparkan
+            if(screenMap[screenId]) {
+                screenMap[screenId].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) {
+                        el.classList.remove('hidden');
+                        el.classList.add('fade-enter');
+                        // Paksa reflow browser
+                        void el.offsetWidth;
+                        el.classList.add('fade-enter-active');
+                        el.classList.remove('fade-enter');
+                    }
+                });
+            }
+
+            // Reset Ujian jika mula baru
+            if(screenId.startsWith('ujian-')) {
+                jenisUjianSemasa = screenId;
+                document.getElementById('auth-ujian').classList.remove('hidden');
+                document.getElementById('borang-soalan-dinamik').classList.add('hidden');
+                document.getElementById('ujian_ic').value = '';
+                document.getElementById('ujian_nama').value = '';
+                document.getElementById('senarai-soalan-container').innerHTML = '';
+                
+                let t = "Ujian";
+                if(screenId === 'ujian-pre1') t = "Pre-Test Hari Pertama Bengkel: Pengurusan Rabies";
+                if(screenId === 'ujian-post1') t = "Post-Test Hari Pertama Bengkel: Pengurusan Rabies";
+                if(screenId === 'ujian-pre2') t = "Pre-Test Hari Kedua Bengkel: Pengukuhan Survelan Penyakit Berjangkit";
+                if(screenId === 'ujian-post2') t = "Post-Test Hari Kedua Bengkel: Pengukuhan Survelan Penyakit Berjangkit";
+                document.getElementById('tajuk-ujian-semasa').innerText = t;
+                navigasiKe('ruangan-ujian', false); 
+            }
+
+            if(pushHistory) history.pushState({ screen: screenId }, "", "#" + screenId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onpopstate = function(event) {
+            if (event.state && event.state.screen) {
+                if(event.state.screen === 'greeting') {
+                    // Jangan kembali ke greeting, tahan di menu utama
+                    history.pushState({ screen: 'main-menu' }, "", "#main-menu");
+                    navigasiKe('main-menu', false);
+                } else {
+                    navigasiKe(event.state.screen, false);
+                }
+            } else {
+                navigasiKe('main-menu', false);
+            }
+        };
+
+        function navBack() { history.back(); }
+
+        // FUNGSI ZOOM & PINCH TENTATIF
+        let tentatifZoomLevel = 100;
+        const tentatifImg = document.getElementById('tentatif-img');
+
+        function setZoom(level) {
+            if (level < 100) level = 100;
+            if (level > 400) level = 400; // Had maksimum zoom 400%
+            tentatifZoomLevel = level;
+            tentatifImg.style.width = tentatifZoomLevel + '%';
+        }
+
+        function zoomTentatif(action) {
+            tentatifImg.style.transition = 'width 0.3s ease';
+            if (action === 'in') setZoom(tentatifZoomLevel + 40);
+            else if (action === 'out') setZoom(tentatifZoomLevel - 40);
+        }
+
+        // Fungsi cubit (pinch-to-zoom) menggunakan jari di skrin bimbit
+        let startDist = 0;
+        let startZoom = 100;
+
+        tentatifImg.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                startDist = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+                startZoom = tentatifZoomLevel;
+                tentatifImg.style.transition = 'none'; // Buang animasi sementara supaya gerakan jari lancar (smooth)
+            }
+        }, { passive: false });
+
+        tentatifImg.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                e.preventDefault(); // Elak skrin web ter-scroll secara rawak apabila sedang mencubit gambar
+                let currentDist = Math.hypot(
+                    e.touches[0].pageX - e.touches[1].pageX,
+                    e.touches[0].pageY - e.touches[1].pageY
+                );
+                let scaleRatio = currentDist / startDist;
+                setZoom(startZoom * scaleRatio);
+            }
+        }, { passive: false });
+        
+        tentatifImg.addEventListener('touchend', (e) => {
+            // Kembalikan animasi transisi selepas tamat mencubit
+            tentatifImg.style.transition = 'width 0.3s ease';
+        });
+
+        // ================= FUNGSI LOGIK & DEV MODE =================
+        function mintaPasswordDev() {
+            showModal(
+                "D-MODE dinyahaktifkan",
+                "Mod pentadbir menggunakan kata laluan dalam kod pelayar tidak selamat. Untuk mengubah sekatan masa, gunakan konfigurasi pentadbir di bahagian server atau deploy versi ujian berasingan."
+            );
+        }
+
+        function toggleStatus(btnId, statId, isOpen) {
+            const btn = document.getElementById(btnId);
+            const stat = document.getElementById(statId);
+            if(btn && stat) {
+                if(isOpen) {
+                    btn.classList.remove('hidden');
+                    stat.classList.add('hidden');
+                } else {
+                    btn.classList.add('hidden');
+                    stat.classList.remove('hidden');
+                }
+            }
+        }
+
+        function checkTimeLogic() {
+            const now = new Date();
+            const h1 = new Date('2026-10-28');
+            const h2 = new Date('2026-10-29');
+            
+            // Set masa
+            let h1BukaHadir = new Date(h1); h1BukaHadir.setHours(16, 0, 0);
+            let h1TutupHadir = new Date(h1); h1TutupHadir.setHours(18, 0, 0);
+            let h2BukaHadir = new Date(h2); h2BukaHadir.setHours(16, 0, 0);
+            let h2TutupHadir = new Date(h2); h2TutupHadir.setHours(18, 0, 0);
+
+            let h1PreBuka = new Date(h1); h1PreBuka.setHours(8, 30, 0);
+            let h1PreTutup = new Date(h1); h1PreTutup.setHours(9, 30, 0);
+            let h1PostBuka = new Date(h1); h1PostBuka.setHours(16, 0, 0);
+            let h1PostTutup = new Date(h1); h1PostTutup.setHours(17, 30, 0);
+            
+            let h2PreBuka = new Date(h2); h2PreBuka.setHours(8, 15, 0);
+            let h2PreTutup = new Date(h2); h2PreTutup.setHours(9, 15, 0);
+            let h2PostBuka = new Date(h2); h2PostBuka.setHours(15, 0, 0);
+            let h2PostTutup = new Date(h2); h2PostTutup.setHours(16, 30, 0);
+
+            // Buka jika DevMode ATAU menepati masa
+            toggleStatus('hari1-hadir-btn', 'hari1-hadir-status', isDevMode || (now >= h1BukaHadir && now <= h1TutupHadir));
+            toggleStatus('hari2-hadir-btn', 'hari2-hadir-status', isDevMode || (now >= h2BukaHadir && now <= h2TutupHadir));
+
+            toggleStatus('hari1-pre-btn', 'hari1-pre-status', isDevMode || (now >= h1PreBuka && now <= h1PreTutup));
+            toggleStatus('hari1-post-btn', 'hari1-post-status', isDevMode || (now >= h1PostBuka && now <= h1PostTutup));
+            
+            toggleStatus('hari2-pre-btn', 'hari2-pre-status', isDevMode || (now >= h2PreBuka && now <= h2PreTutup));
+            toggleStatus('hari2-post-btn', 'hari2-post-status', isDevMode || (now >= h2PostBuka && now <= h2PostTutup));
+        }
+        window.onload = checkTimeLogic;
+
+        // Logik Input Jawatan (Tunjuk Lain-lain)
+        function toggleLain(hari) {
+            const select = document.getElementById('jawatan_' + hari);
+            const inputLain = document.getElementById('jawatan_lain_' + hari);
+            if (select.value === "Lain-lain") {
+                inputLain.classList.remove('hidden');
+                inputLain.required = true;
+            } else {
+                inputLain.classList.add('hidden');
+                inputLain.required = false;
+                inputLain.value = "";
+            }
+        }
+
+        // Treat content returned from Google Sheets as text, not executable HTML.
+        function escapeHTML(value) {
+            return String(value ?? "").replace(/[&<>\"']/g, (char) => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+            }[char]));
+        }
+
+        // ================= CLOUD DATA & KEHADIRAN =================
+        async function fetchCloudData(ic) {
+            try {
+                // KEMAS KINI: Tambah timestamp untuk memaksa data terbaru (elak cache browser lama)
+                const response = await fetch(URL_SEMAKAN_IC + "?ic=" + encodeURIComponent(ic) + "&t=" + Date.now(), { cache: "no-store" });
+                if (!response.ok) return null;
+                const data = await response.json();
+                if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+                return data;
+            } catch (error) { return null; }
+        }
+
+        async function autoIsiNama(idIC, idNama) {
+            const icInput = document.getElementById(idIC);
+            const namaInput = document.getElementById(idNama);
+            const ic = icInput.value;
+            if (ic.length >= 12) {
+                namaInput.placeholder = "Menyemak Pangkalan Data...";
+                let data = await fetchCloudData(ic);
+                if (data && data.wujud && data.nama) namaInput.value = data.nama;
+                namaInput.placeholder = "";
+            }
+        }
+
+        async function submitAttendance(event, hari) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = form.querySelector('button');
+            const hId = hari === 'Hari 1' ? 'h1' : 'h2';
+            
+            // Proses final Jawatan
+            const selectJawatan = document.getElementById('jawatan_' + hId).value;
+            const inputLain = document.getElementById('jawatan_lain_' + hId).value;
+            const jawatanAkhir = (selectJawatan === "Lain-lain") ? inputLain : selectJawatan;
+            
+            document.getElementById('jawatan_final_' + hId).value = jawatanAkhir.toUpperCase();
+
+            const formData = new FormData(form);
+            const ic = formData.get('ic');
+            
+            btn.innerHTML = `<svg class="w-5 h-5 animate-spin mx-auto text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`; 
+            btn.disabled = true;
+
+            let dataCloud = await fetchCloudData(ic);
+            if (!dataCloud) {
+                showModal("Ralat sambungan", "Status kehadiran tidak dapat disahkan. Tiada rekod dihantar. Sila periksa sambungan dan cuba semula.");
+                btn.innerHTML = "Hantar Kehadiran " + (hari === 'Hari 1' ? 'Hari Pertama Bengkel' : 'Hari Kedua Bengkel');
+                btn.disabled = false;
+                return;
+            }
+            {
+                if ((hari === 'Hari 1' && dataCloud.hadir_Hari1) || (hari === 'Hari 2' && dataCloud.hadir_Hari2)) {
+                    let hariLabel = hari === 'Hari 1' ? 'Hari Pertama Bengkel' : 'Hari Kedua Bengkel';
+                    showModal("Akses Ditolak", "Anda telah pun merekodkan kehadiran untuk " + hariLabel + " dalam sistem.");
+                    btn.innerHTML = "Hantar Kehadiran " + hariLabel; btn.disabled = false;
+                    return;
+                }
+            }
+
+            const urlParams = new URLSearchParams();
+            urlParams.append('hari', hari);
+            urlParams.append('nama', formData.get('nama').toUpperCase());
+            urlParams.append('ic', ic);
+            urlParams.append('jawatan', jawatanAkhir.toUpperCase());
+            urlParams.append('gred', formData.get('gred').toUpperCase());
+            urlParams.append('tempat', formData.get('tempat').toUpperCase());
+
+            fetch(URL_KEHADIRAN, { method: 'POST', body: urlParams, mode: 'no-cors' })
+            .then(() => {
+                showModal("Permintaan dihantar", "Pelayar tidak dapat mengesahkan sama ada rekod sudah disimpan oleh server. Sila semak rekod pada Google Sheets sebelum menghantar semula."); 
+            })
+            .catch(() => showModal("Ralat", "Masalah rangkaian. Sila cuba lagi."))
+            .finally(() => { 
+                let hariLabel = hari === 'Hari 1' ? 'Hari Pertama Bengkel' : 'Hari Kedua Bengkel';
+                btn.innerHTML = "Hantar Kehadiran " + hariLabel; 
+                btn.disabled = false; 
+            });
+        }
+
+        // ================= SISTEM UJIAN =================
+        async function sahkanDanMula() {
+            const ic = document.getElementById('ujian_ic').value;
+            const nama = document.getElementById('ujian_nama').value;
+            const btnSahkan = document.querySelector('button[onclick="sahkanDanMula()"]');
+            
+            if(!/^\d{12}$/.test(ic)) return showModal("Perhatian", "Sila masukkan 12 digit Kad Pengenalan yang sah (Tanpa sempang).");
+            if(nama.length < 3) return showModal("Perhatian", "Sila isikan Nama Penuh.");
+
+            btnSahkan.innerHTML = "Menyemak Sistem..."; btnSahkan.disabled = true;
+
+            let dataCloud = await fetchCloudData(ic);
+            btnSahkan.innerHTML = "Sahkan & Buka Soalan"; btnSahkan.disabled = false;
+
+            if (!dataCloud) return showModal("Ralat", "Gagal berhubung dengan pelayan. Pastikan talian internet anda stabil.");
+
+            if (jenisUjianSemasa === 'ujian-pre1' && dataCloud.pre1 !== null) return showModal("Akses Ditolak", "Anda telah pun mengambil Pre-Test untuk Hari Pertama Bengkel.");
+            if (jenisUjianSemasa === 'ujian-pre2' && dataCloud.pre2 !== null) return showModal("Akses Ditolak", "Anda telah pun mengambil Pre-Test untuk Hari Kedua Bengkel.");
+
+            // Sekatan Post-Test & Simpanan markah Pre-Test
+            if (jenisUjianSemasa === 'ujian-post1') {
+                if (dataCloud.post1 !== null) return showModal("Akses Ditolak", "Anda telah pun menghantar Post-Test untuk Hari Pertama Bengkel.");
+                preTestScoreCache = dataCloud.pre1 !== null ? dataCloud.pre1 : 0;
+            }
+            if (jenisUjianSemasa === 'ujian-post2') {
+                if (dataCloud.post2 !== null) return showModal("Akses Ditolak", "Anda telah pun menghantar Post-Test untuk Hari Kedua Bengkel.");
+                preTestScoreCache = dataCloud.pre2 !== null ? dataCloud.pre2 : 0;
+            }
+
+            document.getElementById('auth-ujian').classList.add('hidden');
+            document.getElementById('borang-soalan-dinamik').classList.remove('hidden');
+            
+            let fetchUrl = jenisUjianSemasa.includes('1') ? URL_SOALAN_RABIES : URL_SOALAN_SURVELAN;
+            
+            fetch(fetchUrl, { cache: "no-store" })
+            .then(res => { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
+            .then(data => {
+                if (!Array.isArray(data)) throw new Error("Format data soalan tidak sah");
+                dataSoalanSemasa = data.filter(item => item && item.soalan && item.soalan.toString().trim() !== "");
+                if (dataSoalanSemasa.length === 0) throw new Error("Tiada soalan tersedia");
+                binaBorangSoalan(dataSoalanSemasa);
+            })
+            .catch(err => {
+                document.getElementById('loading-soalan').classList.remove('hidden');
+                document.getElementById('loading-soalan').innerHTML = "<p class='text-red-400'>Gagal memuat turun soalan. Sila kembali dan cuba semula.</p>";
+                document.getElementById('auth-ujian').classList.remove('hidden');
+                document.getElementById('borang-soalan-dinamik').classList.add('hidden');
+            });
+        }
+
+        function binaBorangSoalan(data) {
+            const container = document.getElementById('senarai-soalan-container');
+            document.getElementById('loading-soalan').classList.add('hidden');
+            container.innerHTML = '';
+
+            data.forEach((item, index) => {
+                const soalanHTML = `
+                <div class="bg-slate-800/80 p-5 rounded-2xl border border-slate-700/50 hover:border-slate-600 transition">
+                    <p class="font-bold text-white mb-4 leading-relaxed">${index + 1}. ${escapeHTML(item.soalan)}</p>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-700/50 border border-slate-700 cursor-pointer transition">
+                            <input type="radio" name="soalan_${index}" value="A" required class="w-5 h-5 text-blue-500 bg-slate-900 border-slate-600 focus:ring-blue-500 focus:ring-offset-slate-800">
+                            <span class="text-slate-300 text-sm">${escapeHTML(item.pilihan_a)}</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-700/50 border border-slate-700 cursor-pointer transition">
+                            <input type="radio" name="soalan_${index}" value="B" required class="w-5 h-5 text-blue-500 bg-slate-900 border-slate-600 focus:ring-blue-500 focus:ring-offset-slate-800">
+                            <span class="text-slate-300 text-sm">${escapeHTML(item.pilihan_b)}</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-700/50 border border-slate-700 cursor-pointer transition">
+                            <input type="radio" name="soalan_${index}" value="C" required class="w-5 h-5 text-blue-500 bg-slate-900 border-slate-600 focus:ring-blue-500 focus:ring-offset-slate-800">
+                            <span class="text-slate-300 text-sm">${escapeHTML(item.pilihan_c)}</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl hover:bg-slate-700/50 border border-slate-700 cursor-pointer transition">
+                            <input type="radio" name="soalan_${index}" value="D" required class="w-5 h-5 text-blue-500 bg-slate-900 border-slate-600 focus:ring-blue-500 focus:ring-offset-slate-800">
+                            <span class="text-slate-300 text-sm">${escapeHTML(item.pilihan_d)}</span>
+                        </label>
+                    </div>
+                </div>`;
+                container.innerHTML += soalanHTML;
+            });
+        }
+
+        function hantarUjian(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = form.querySelector('button[type="submit"]');
+            const formData = new FormData(form);
+            const ic = document.getElementById('ujian_ic').value;
+            const nama = document.getElementById('ujian_nama').value.toUpperCase();
+            
+            let skor = 0; 
+            let total = dataSoalanSemasa.length;
+            if (total === 0) {
+                showModal("Ralat", "Tiada soalan tersedia. Sila kembali dan muatkan semula ujian.");
+                return;
+            }
+            
+            dataSoalanSemasa.forEach((item, index) => {
+                let jwpPeserta = formData.get(`soalan_${index}`);
+                let jwpSebenar = item.jawapan;
+                
+                // PENAPIS PENTING: Bersihkan ruang jarak (space) dan pastikan huruf besar/kecil tidak menjadi isu
+                if (jwpPeserta && jwpSebenar) {
+                    if (jwpPeserta.toString().trim().toUpperCase() === jwpSebenar.toString().trim().toUpperCase()) {
+                        skor++;
+                    }
+                }
+            });
+            
+            let peratusan = Math.round((skor / total) * 100);
+
+            if (jenisUjianSemasa.includes('post') && peratusan < 80) {
+                return showModal("Tidak Lulus", `Markah Anda: <b class="text-red-400 text-lg">${peratusan}%</b><br><br>Anda perlu mencapai 80% untuk lulus. Sila semak jawapan anda dan hantar semula.`);
+            }
+
+            btn.innerHTML = "Menyimpan... Sila tunggu"; btn.disabled = true;
+
+            const urlParams = new URLSearchParams();
+            urlParams.append('hari', jenisUjianSemasa.includes('1') ? 'Hari 1 (Rabies)' : 'Hari 2 (Survelan)');
+            urlParams.append('jenis_ujian', jenisUjianSemasa.includes('pre') ? 'Pre-Test' : 'Post-Test');
+            urlParams.append('nama', nama);
+            urlParams.append('ic', ic);
+            
+            // KEMAS KINI: Tambah koma atas (') pada markah untuk elak Google Sheet tukar menjadi tarikh
+            urlParams.append('markah', "'" + skor + '/' + total);
+            
+            // KEMAS KINI: Buang simbol % supaya Google Sheet membacanya sebagai nombor bulat (80, bukan 0.8)
+            urlParams.append('peratusan', peratusan);
+
+            fetch(URL_MARKAH, { method: 'POST', body: urlParams, mode: 'no-cors' })
+            .then(() => {
+                if (jenisUjianSemasa.includes('pre')) {
+                    showModal("Permintaan dihantar", "Pelayar tidak dapat mengesahkan sama ada markah telah disimpan oleh server. Sila semak Google Sheets sebelum mengulangi ujian.");
+                } else {
+                    let preScore = Number(preTestScoreCache) || 0; // Pastikan format nombor
+                    let beza = peratusan - preScore;
+                    let teksBeza = beza >= 0 
+                        ? `<span class="text-emerald-400 font-bold">Peningkatan: +${beza}%</span>` 
+                        : `<span class="text-red-400 font-bold">Penurunan: ${beza}%</span>`;
+                        
+                    showModal("Tahniah Lulus!", 
+                        `<div class="space-y-1 mb-3 text-left">` +
+                        `<p>Markah Pre-Test: <b class="text-slate-300">${preScore}%</b></p>` +
+                        `<p>Markah Post-Test: <b class="text-emerald-400 text-xl">${peratusan}%</b></p>` +
+                        `</div>` +
+                        `<div class="mb-4 bg-slate-800/50 p-3 rounded-lg border border-slate-700 inline-block px-4 shadow-inner">${teksBeza}</div>` +
+                        `<p class="text-xs text-slate-400 leading-relaxed">Syarat Post-Test selesai. Sila semak tab Kehadiran untuk menjana E-Sijil anda.</p>`
+                    );
+                }
+                navBack();
+            })
+            .catch(() => showModal("Ralat", "Ralat Rangkaian. Sila cuba lagi."))
+            .finally(() => { btn.innerHTML = "HANTAR JAWAPAN"; btn.disabled = false; });
+        }
+
+
+        // ================= SEMAKAN DAN JANA E-SIJIL =================
+        async function semakSijil() {
+            let ic = document.getElementById('ic-sijil').value.trim();
+            let resultDiv = document.getElementById('sijil-result');
+            let btnSijil = document.getElementById('btn-muat-turun-sijil');
+            let btnSemak = document.querySelector('button[onclick="semakSijil()"]');
+            
+            resultDiv.classList.add('hidden'); btnSijil.classList.add('hidden');
+
+            if(!/^\d{12}$/.test(ic)) return showModal("Perhatian", "Masukkan 12 digit Kad Pengenalan yang sah!");
+
+            btnSemak.innerHTML = "Menyemak Sistem..."; btnSemak.disabled = true;
+            let data = await fetchCloudData(ic);
+            btnSemak.innerHTML = "Semak Kelayakan"; btnSemak.disabled = false;
+
+            if (!data) return showModal("Ralat", "Sistem pangkalan data sibuk. Sila cuba lagi sebentar.");
+
+            resultDiv.classList.remove('hidden');
+
+            // Tambahan logik jika rekod IC belum ada dalam pangkalan data
+            if (!data.wujud) {
+                resultDiv.innerHTML = '<p class="text-red-400 font-bold mt-2">Rekod tidak dijumpai. Sila pastikan IC anda betul dan anda telah mendaftar kehadiran.</p>';
+                resultDiv.className = "mt-4 p-5 rounded-2xl text-sm bg-red-900/20 border border-red-500/30 transition-all duration-500";
+                return;
+            }
+
+            let h1 = data.hadir_Hari1; let h2 = data.hadir_Hari2;
+            let post1 = data.post1 || 0; let post2 = data.post2 || 0;
+
+            let statusHTML = '<ul class="space-y-2 mt-2 mb-4 text-slate-300">';
+            statusHTML += `<li class="flex items-center">${h1 ? '✅' : '❌'} <span class="ml-2">Kehadiran Hari Pertama Bengkel</span></li>`;
+            statusHTML += `<li class="flex items-center">${h2 ? '✅' : '❌'} <span class="ml-2">Kehadiran Hari Kedua Bengkel</span></li>`;
+            statusHTML += `<li class="flex items-center">${post1 >= 80 ? '✅' : '❌'} <span class="ml-2">Post-Test Pengurusan Rabies (${post1}%)</span></li>`;
+            statusHTML += `<li class="flex items-center">${post2 >= 80 ? '✅' : '❌'} <span class="ml-2">Post-Test Pengukuhan Survelan (${post2}%)</span></li>`;
+            statusHTML += '</ul>';
+
+            if(h1 && h2 && post1 >= 80 && post2 >= 80) {
+                resultDiv.innerHTML = statusHTML + '<p class="text-emerald-400 font-bold mt-2 text-base">TAHNIAH! Anda layak memuat turun E-Sijil.</p>';
+                resultDiv.className = "mt-4 p-5 rounded-2xl text-sm bg-emerald-900/20 border border-emerald-500/30 transition-all duration-500";
+                window.namaSijilSemasa = data.nama || "PESERTA BENGKEL";
+                btnSijil.classList.remove('hidden');
+            } else {
+                resultDiv.innerHTML = statusHTML + '<p class="text-red-400 font-bold mt-2 text-xs">Syarat tidak mencukupi untuk janaan sijil. Sila pastikan anda lulus ujian dan hadir penuh.</p>';
+                resultDiv.className = "mt-4 p-5 rounded-2xl text-sm bg-red-900/20 border border-red-500/30 transition-all duration-500";
+            }
+        }
+
+        function janaSijil() {
+            let ic = document.getElementById('ic-sijil').value;
+            let nama = window.namaSijilSemasa;
+            let noRujukan = "CDC26-" + ic.substring(8,12) + "-" + Math.floor(Math.random() * 1000);
+
+            const canvas = document.getElementById('canvas-sijil');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 3508; canvas.height = 2480;
+            ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = "#1e3a8a"; ctx.lineWidth = 28; ctx.strokeRect(80, 80, canvas.width - 160, canvas.height - 160);
+            ctx.strokeStyle = "#c5a45b"; ctx.lineWidth = 8; ctx.strokeRect(115, 115, canvas.width - 230, canvas.height - 230);
+            ctx.textAlign = "center"; ctx.fillStyle = "#1e3a8a";
+            ctx.font = "bold 112px Arial"; ctx.fillText("SIJIL PENYERTAAN", canvas.width / 2, 420);
+            ctx.font = "48px Arial"; ctx.fillStyle = "#475569"; ctx.fillText("BENGKEL LATIHAN PENGURUSAN RABIES DAN", canvas.width / 2, 570);
+            ctx.fillText("SURVELAN PENYAKIT BERJANGKIT TAHUN 2026", canvas.width / 2, 640);
+            ctx.font = "42px Arial"; ctx.fillStyle = "#334155"; ctx.fillText("Dengan ini disahkan bahawa", canvas.width / 2, 850);
+            ctx.font = "bold 92px Arial"; ctx.fillStyle = "#0f172a";
+            let namaPaparan = String(nama || "PESERTA BENGKEL").toUpperCase();
+            while (ctx.measureText(namaPaparan).width > canvas.width - 500 && ctx.font.match(/(\d+)px/)) {
+                const size = Math.max(48, parseInt(ctx.font.match(/(\d+)px/)[1], 10) - 4);
+                ctx.font = "bold " + size + "px Arial";
+                if (size <= 48) break;
+            }
+            ctx.fillText(namaPaparan, canvas.width / 2, 1050);
+            ctx.font = "42px Arial"; ctx.fillStyle = "#334155";
+            ctx.fillText("telah memenuhi syarat penyertaan bengkel", canvas.width / 2, 1170);
+            ctx.fillText("Pejabat Kesihatan Kawasan Kinabatangan", canvas.width / 2, 1240);
+            ctx.font = "34px Arial"; ctx.fillStyle = "#64748b";
+            ctx.fillText("No. Rujukan: " + noRujukan, canvas.width / 2, 2110);
+            ctx.font = "30px Arial"; ctx.fillText("Dijana secara elektronik", canvas.width / 2, 2180);
+            const link = document.createElement('a');
+            link.download = 'E-Sijil_Bengkel2026_' + String(namaPaparan).replace(/[^A-Z0-9_-]/g, '_') + '.jpg';
+            link.href = canvas.toDataURL('image/jpeg', 0.95);
+            link.click();
+        }
+    </script>
+</body>
+</html>
